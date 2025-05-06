@@ -154,18 +154,20 @@ export default function TeacherSidebar() {
             Welcome back, Professor Anderson!
           </h2>
           <p className="opacity-90">Monday, May 05, 2025</p>
-          <div className="mt-4 flex flex-wrap gap-4">
+          <div className="mt-4 flex flex-wrap gap-4 text-black">
             <div className="bg-white bg-opacity-20 rounded-lg px-4 py-2 backdrop-blur-sm">
               <p className="text-sm">Active Students</p>
-              <p className="text-2xl font-bold">127</p>
+              <p className="text-orange-800 text-2xl font-bold">127</p>
             </div>
             <div className="bg-white bg-opacity-20 rounded-lg px-4 py-2 backdrop-blur-sm">
               <p className="text-sm">Classes Today</p>
-              <p className="text-2xl font-bold">3</p>
+              <p className="text-blue-800 text-2xl font-bold">3</p>
             </div>
             <div className="bg-white bg-opacity-20 rounded-lg px-4 py-2 backdrop-blur-sm">
               <p className="text-sm">Pending Tasks</p>
-              <p className="text-2xl font-bold">{pendingTasks.length}</p>
+              <p className="text-green-800  text-2xl font-bold">
+                {pendingTasks.length}
+              </p>
             </div>
           </div>
         </div>

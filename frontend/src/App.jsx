@@ -37,6 +37,9 @@ import Assignments from "./components/Student/Courses/Assignment";
 import Grades from "./components/Student/Courses/grades";
 import TeacherCalender from "./components/Teacher/Calender";
 import StudentCourses from "./components/Teacher/Student";
+import SharedNotes from "./components/Teacher/Notes/SharedNotes";
+import PersonalInfo from "./components/Teacher/Settings/personalinfo";
+import ChangePassword from "./components/Teacher/Settings/ChangePassword";
 
 export default function App() {
   return (
@@ -90,8 +93,11 @@ export default function App() {
           <Route path="announcements" element={<Announcements />} />
           <Route path="all-notes" element={<AllNotes />} />
           <Route path="create-note" element={<CreateNote />} />
+          <Route path="shared-notes" element={<SharedNotes />} />
           <Route path="calendar" element={<TeacherCalender />} />
           <Route path="students" element={<StudentCourses />} />
+          <Route path="personal-info" element={<PersonalInfo />} />
+          <Route path="change-password" element={<ChangePassword />} />
           <Route
             path="notification-preferences"
             element={<NotificationPreferences />}
