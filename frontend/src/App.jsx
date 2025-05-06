@@ -31,7 +31,7 @@ import AllNotes from "./components/Teacher/Notes/AllNotes";
 // import PersonalInfo from "./components/Teacher/PersonalInfo";
 import NotificationPreferences from "./components/Teacher/Communication/Notifications";
 import TeacherDashboard from "./components/Teacher/TeacherDashboard";
-import DashboardHome from "./components/Employer/employeeDashboard";
+import DashboardHome from "./components/Employer/employeedashboard";
 import ManageGroups from "./components/Teacher/groups/ManageGroups";
 import Assignments from "./components/Student/Courses/Assignment";
 import Grades from "./components/Student/Courses/grades";
