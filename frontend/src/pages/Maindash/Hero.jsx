@@ -1,6 +1,6 @@
 // src/components/Hero.jsx
 import React from 'react';
-import video from '../../assets/Video.mp4';
+import video from '../../../public/Video.mp4';
 import logocircle from '../../assets/circlelogo.png';
 import { Calendar, ArrowRight } from 'lucide-react';
 
