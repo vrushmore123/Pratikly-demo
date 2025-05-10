@@ -23,7 +23,7 @@ const Header = () => {
           {/* Logo - Updated for better alignment and color harmony */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <div className="bg-green-900 rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+              <div className="bg-[#0b750b] rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Praktikly Logo"
