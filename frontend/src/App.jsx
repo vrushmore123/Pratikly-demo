@@ -53,6 +53,8 @@ import UseCases from "./pages/Maindash/UseCases";
 import Forms from "./pages/Maindash/Form/DemoBookingForm";
 import CTA from "./pages/Maindash/CTA";
 import Footer from "./pages/Maindash/Footer";
+import LiaHub from "./pages/Maindash/Products/LiaHub";
+import LMS from "./pages/Maindash/Products/LMS";
 
 // Landing Page Wrapper
 const LandingPage = () => (
@@ -76,6 +78,8 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/form" element={<Forms />} />
+        <Route path="/Liahub" element={<LiaHub />} />
+        <Route path="/Lms" element={<LMS />} />
        
 
         {/* Employer Routes */}

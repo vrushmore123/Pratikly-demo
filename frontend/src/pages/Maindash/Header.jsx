@@ -16,25 +16,25 @@ const Header = () => {
   };
 
   return (
-    <header className={` top-0 left-0 right-0 z-50 ${darkMode ? 'bg-gray-900 text-white' : 'bg-[#d5f3f9] text-[#0d5550]'} transition-colors duration-300 shadow-sm`}>
-      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className={`  top-0 left-0 right-0 z-50 ${darkMode ? 'bg-gray-900 text-white' : 'bg-[#ffffff] text-[#0d5550]'} transition-colors duration-300 shadow-sm`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center bg-[#0b7077] rounded-full p-2 shadow-md hover:shadow-lg transition-shadow duration-300">
-  <Link to="/" className="flex items-center space-x-2">
-    <img
-      src={logo}
-      alt="Praktikly Logo"
-      className="h-10 w-auto"
-    />
-    
-  </Link>
-</div>
-
+          {/* Logo - Updated for better alignment and color harmony */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <div className="bg-green-900 rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+                <img
+                  src={logo}
+                  alt="Praktikly Logo"
+                  className="h-10 w-auto"
+                />
+              </div>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 ">
             {/* Products Dropdown */}
             <div
               className="relative"
@@ -55,7 +55,7 @@ const Header = () => {
                     LMS
                   </Link>
                   <Link
-                    to="/lia-platform"
+                    to="/liaHUb"
                     className={`block px-4 py-2 ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
                     Lia Platform
@@ -71,7 +71,7 @@ const Header = () => {
               About Us
             </Link>
             <Link 
-              to="/contact" 
+              to="/" 
               className={`font-medium ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}
             >
               Contact
@@ -109,7 +109,7 @@ const Header = () => {
             
             <Link
               to="/login"
-              className={`px-4 py-2 rounded-md font-medium transition-colors ${darkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-[#0b7077] hover:bg-[#0a5c65] text-white'}`}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${darkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-[#0d5550] hover:bg-[#0b7077] text-white'}`}
             >
               Log In
             </Link>
@@ -199,7 +199,7 @@ const Header = () => {
                 
                 <Link
                   to="/login"
-                  className={`px-4 py-2 rounded-md font-medium ${darkMode ? 'bg-blue-600 text-white' : 'bg-[#0b7077] text-white'}`}
+                  className={`px-4 py-2 rounded-md font-medium ${darkMode ? 'bg-blue-600 text-white' : 'bg-[#0d5550] text-white'}`}
                 >
                   Log In
                 </Link>

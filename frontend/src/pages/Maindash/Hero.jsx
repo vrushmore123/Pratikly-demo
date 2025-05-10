@@ -2,34 +2,41 @@
 import React from 'react';
 import video from '../../assets/video.mp4';
 import logocircle from '../../assets/circlelogo.png';
+import { Calendar, ArrowRight } from 'lucide-react';
 
 const Hero = () => {
   return (
     <>
-      <section className="bg-[#d5f3f9] pt-[100px] pb-[200px] px-10 relative overflow-hidden">
+      <section className="bg-[#ffffff] pt-[100px] pb-[200px] px-10 relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
           <div className="relative">
             <div className="max-w-[580px] ml-[4%] z-10 relative">
-              <h1 className="text-[#0b7077] text-[3.5rem] md:text-[4.2rem] font-bold leading-[1.2] tracking-[-0.02em] mb-8">
+              <h1 className="text-[#0b5814] text-[3.5rem] md:text-[4.2rem] font-bold leading-[1.2] tracking-[-0.02em] mb-8">
                 Empowering Education. Enabling Careers.
               </h1>
               <div className="my-5 mb-10">
-                <p className="text-xl text-gray-800">
-                  Welcome to the Future Learning Platform for Schools & Universities </p>
+                <p className="text-xl text-[#000000]">
+                  Welcome to the Future Learning Platform 
+                </p>
               </div>
-              <div className="hidden sm:block">
-                <a href="/form" className="bg-white text-black font-bold uppercase border-2 border-black px-6 py-3 hover:translate-x-[-2px] hover:translate-y-[2px] hover:shadow-button-hover transition-all shadow-button inline-block">
-                  Book a Demo
-                </a>
-              </div>
-              <div className="sm:hidden">
-                <a href="#get-started" className="bg-white text-black font-bold uppercase border-2 border-black px-6 py-3 hover:translate-x-[-2px] hover:translate-y-[2px] hover:shadow-button-hover transition-all shadow-button inline-block">
-                  Join Now
-                </a>
-              </div>
+         <div className="hidden sm:block">
+      <a
+        href="/form"
+        className="group relative inline-flex items-center justify-center gap-2 bg-[#88fb68] text-gray-900 font-bold uppercase tracking-wide px-7 py-3.5 rounded-lg border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-200 overflow-hidden"
+      >
+        <span className="absolute right-full top-0 h-full w-12 -translate-x-2 bg-white/20 blur-sm group-hover:animate-shine" />
+        <span className="flex items-center gap-2">
+          <Calendar size={18} className="inline-block" />
+          <span>Book a Demo</span>
+          <ArrowRight size={18} className="inline-block transition-transform group-hover:translate-x-1" />
+        </span>
+      </a>
+    </div>
+
+           
             </div>
 
-            <div className="w-[90%] pt-[52%] absolute top-auto right-auto bottom-[-250px] left-[18%] overflow-hidden">
+            <div className="ml-32  w-[90%] pt-[52%] absolute top-auto right-auto bottom-[-250px] left-[18%] overflow-hidden">
               <div className="w-full h-full absolute inset-0">
                 <video 
                   autoPlay 
@@ -50,15 +57,28 @@ const Hero = () => {
 
       {/* Curved base with center play button */}
       <div className="relative bg-white">
-        <div className="h-[50px] bg-[#d5f3f9] "></div>
+        <div className="h-[50px] bg-[#ffffff]"></div>
 
-        <div className="absolute inset-x-0 -bottom-[60px] flex justify-center">
-          <div className="w-[150px] h-[150px] bg-[#0b7077] rounded-full flex items-center justify-center shadow-lg z-20">
+        <div className="mb-9 absolute inset-x-0 -bottom-[60px] flex items-center justify-center">
+          {/* Left decorative line */}
+          <div className="flex-1 relative">
+            <div className="h-[2px] bg-gradient-to-r from-transparent via-[#007C91] to-[#007C91] mx-4"></div>
+            <div className="absolute -top-[4px] left-0 w-2 h-2 rounded-full bg-[#007C91]"></div>
+          </div>
+          
+          {/* Circle */}
+          <div className="w-[150px] h-[150px] bg-[#014825] rounded-full flex items-center justify-center shadow-lg z-20 ring-4 ring-white/20">
             <img 
               src={logocircle} 
               alt="Logo" 
               className="w-[80px] h-[80px] object-contain" 
             />
+          </div>
+          
+          {/* Right decorative line */}
+          <div className="flex-1 relative">
+            <div className="h-[2px] bg-gradient-to-l from-transparent via-[#007C91] to-[#007C91] mx-4"></div>
+            <div className="absolute -top-[4px] right-0 w-2 h-2 rounded-full bg-[#007C91]"></div>
           </div>
         </div>
       </div>

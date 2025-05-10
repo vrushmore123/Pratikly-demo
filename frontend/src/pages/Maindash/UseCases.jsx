@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Using placeholder images since external URLs aren't supported
 const useCases = [
   {
     id: 1,
     title: "Streamlined Learning Management",
     titleHighlight: "Learning",
     description: "Manage courses, track assignments, grade submissions, and communicate seamlessly between students and teachers.",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
     colorClass: "from-emerald-400 to-emerald-600",
     bgClass: "bg-emerald-50",
     iconBgClass: "bg-emerald-100",
@@ -18,6 +18,7 @@ const useCases = [
     title: "Internship Placement System",
     titleHighlight: "Internship",
     description: "Automated workflows that connect students to verified companies with follow-ups and evaluations.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
     colorClass: "from-blue-500 to-blue-700",
     bgClass: "bg-blue-50",
     iconBgClass: "bg-blue-100",
@@ -28,6 +29,7 @@ const useCases = [
     title: "Job Preparation & Placement",
     titleHighlight: "Job",
     description: "In-built job board, CV support, and tracking of student employment with integration into market platforms.",
+    image: "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
     colorClass: "from-purple-500 to-purple-700",
     bgClass: "bg-purple-50",
     iconBgClass: "bg-purple-100",
@@ -38,11 +40,11 @@ const useCases = [
     title: "Microsoft 365 Integration",
     titleHighlight: "Microsoft",
     description: "Connect Teams, Outlook, SharePoint to streamline online learning, planning, and collaboration.",
+    image: "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
     colorClass: "from-orange-500 to-orange-700",
     bgClass: "bg-orange-50",
     iconBgClass: "bg-orange-100",
-    borderColorClass: "border-orange-300",
-    fullWidth: true
+    borderColorClass: "border-orange-300"
   }
 ];
 
@@ -94,16 +96,27 @@ const UseCases = () => {
   };
 
   return (
-    <section className="px-4 py-16 sm:px-8 lg:px-12 xl:px-16 bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
+    <section className="px-4 py-16 sm:px-8 lg:px-16 xl:px-20 bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
+      {/* Subtle animated background elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-emerald-100/20 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 -right-20 w-96 h-96 rounded-full bg-amber-100/20 blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
+          <div className="absolute top-0 left-1/4 w-2 h-2 bg-emerald-400/60 rounded-full animate-ping" style={{animationDuration: '3s'}}></div>
+          <div className="absolute top-1/4 right-1/3 w-3 h-3 bg-amber-400/60 rounded-full animate-ping" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-blue-400/60 rounded-full animate-ping" style={{animationDuration: '2.5s', animationDelay: '0.5s'}}></div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto relative">
         <div className="flex flex-col">
-          {/* Section Header */}
+          {/* Section Header with improved spacing */}
           <div className="text-center pb-12 sm:pb-16 lg:pb-20 relative">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative inline-block">
               <span className="text-gray-900">One Platform. </span>
               <span className="text-emerald-600 relative">
                 Multiple Solutions.
-                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-amber-300 to-emerald-500"></span>
+                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-amber-300 to-emerald-500 transform origin-left animate-pulse"></span>
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -111,41 +124,43 @@ const UseCases = () => {
             </p>
           </div>
 
-          {/* Use Cases Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          {/* Use Cases Grid - 2 columns per row layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {useCases.map((useCase) => (
               <div 
                 key={useCase.id}
-                className={`relative group transition-all duration-500 ease-out transform hover:-translate-y-2 ${useCase.fullWidth ? 'md:col-span-2' : ''}`}
+                className="relative group transition-all duration-500 ease-out transform hover:-translate-y-2"
                 onMouseEnter={() => setActiveCard(useCase.id)}
                 onMouseLeave={() => setActiveCard(null)}
               >
-                {/* Card Glow Border Effect */}
-                <div className={`absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500 group-hover:blur-md`} />
+                {/* Card Glow Effect - Using card's own color */}
+                <div className={`absolute -inset-0.5 bg-gradient-to-r ${useCase.colorClass} rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500 group-hover:blur-md ${activeCard === useCase.id ? 'animate-pulse' : ''}`} />
                 
                 {/* Main Card */}
                 <div
-                  className={`relative bg-white rounded-2xl overflow-hidden h-full border border-gray-200/80 shadow-md group-hover:shadow-2xl transition-all duration-500 z-10`}
+                  className="relative bg-white rounded-2xl overflow-hidden h-full border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 z-10"
                 >
-                  <div className={`flex ${useCase.fullWidth ? 'flex-col lg:flex-row' : 'flex-col'} h-full`}>
-                    {/* Text Content */}
-                    <div className={`p-8 lg:p-10 ${useCase.fullWidth ? 'lg:w-1/2' : ''} relative overflow-hidden`}>
-                      <div className="flex items-center mb-8 relative">
-                        {/* Icon Container */}
-                        <div className={`w-16 h-16 mr-5 rounded-2xl flex items-center justify-center ${useCase.iconBgClass} transition-all duration-500 group-hover:shadow-lg relative overflow-hidden`}>
-                          <div className="text-gray-800 transition-transform duration-500 group-hover:scale-110 relative z-10">
-                            {getIconComponent(useCase.titleHighlight)}
+                  <div className="flex flex-col h-full">
+                    {/* Content side */}
+                    <div className="p-8 lg:p-10 flex flex-col justify-between relative">
+                      {/* Top section with icon and number */}
+                      <div>
+                        <div className="flex items-center gap-6 mb-6">
+                          {/* Icon Container */}
+                          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${useCase.iconBgClass} transition-all duration-500 group-hover:shadow-lg relative overflow-hidden`}>
+                            <div className={`absolute inset-0 bg-gradient-to-br ${useCase.colorClass} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                            <div className="text-gray-800 transition-transform duration-500 group-hover:scale-110">
+                              {getIconComponent(useCase.titleHighlight)}
+                            </div>
+                          </div>
+                          
+                          {/* Number indicator */}
+                          <div className={`relative rounded-full w-12 h-12 flex justify-center items-center text-xl font-bold ${useCase.bgClass} text-gray-800`}>
+                            <div className={`absolute inset-0 rounded-full border-2 ${useCase.borderColorClass} opacity-70 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                            <span>{useCase.id}</span>
                           </div>
                         </div>
                         
-                        {/* Number indicator */}
-                        <div className={`relative rounded-full w-12 h-12 flex justify-center items-center text-xl font-bold ${useCase.bgClass} text-gray-800`}>
-                          <div className={`absolute inset-0 rounded-full border-2 ${useCase.borderColorClass} opacity-50 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                          <span className="relative z-10">{useCase.id}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="max-w-[500px] relative">
                         {/* Title with highlight */}
                         <h3 className="text-2xl lg:text-3xl font-bold leading-snug mb-4 text-gray-900">
                           {useCase.title.split(useCase.titleHighlight)[0]}
@@ -157,23 +172,23 @@ const UseCases = () => {
                         </h3>
                         
                         {/* Description */}
-                        <p className="text-base lg:text-lg text-gray-600 transform opacity-90 group-hover:opacity-100 transition-all duration-500">
+                        <p className="text-base lg:text-lg text-gray-600 mb-6">
                           {useCase.description}
                         </p>
                         
-                        {/* Feature list */}
-                        <ul className="mt-6 space-y-2">
+                        {/* Feature list - Consistent styling */}
+                        <ul className="space-y-3">
                           <li className="flex items-center text-sm text-gray-600">
-                            <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                              <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 ${useCase.bgClass}`}>
+                              <svg className={`w-3 h-3 text-${useCase.colorClass.split('-')[1]}-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                               </svg>
                             </span>
                             Cloud-based solution
                           </li>
                           <li className="flex items-center text-sm text-gray-600">
-                            <span className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                              <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 ${useCase.bgClass}`}>
+                              <svg className={`w-3 h-3 text-${useCase.colorClass.split('-')[1]}-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                               </svg>
                             </span>
@@ -183,23 +198,31 @@ const UseCases = () => {
                       </div>
                     </div>
 
-                    {/* Image Content */}
-                    <div className={`flex-1 min-h-[300px] ${useCase.fullWidth ? 'lg:min-h-[450px]' : ''} ${useCase.bgClass} relative overflow-hidden group`}>
+                    {/* Image side with consistent height */}
+                    <div className={`relative min-h-[240px] ${useCase.bgClass} overflow-hidden`}>
+                      {/* Rating badge - Consistently positioned */}
+                      <div className="absolute top-6 left-6 z-20">
+              
+                      </div>
+                    
+                      {/* Image with overlay */}
                       <div className="absolute inset-0 transform group-hover:scale-105 transition-transform duration-700 ease-out">
                         <img 
-                          src={`/api/placeholder/800/500?text=${useCase.title.replace(/ /g, '+')}`}
+                          src={useCase.image}
                           alt={`Illustration for ${useCase.title}`}
                           className="w-full h-full object-cover"
+                          loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-500"></div>
                       </div>
                       
-                      {/* Demo button */}
-                      <div className="absolute bottom-6 right-6">
+                      {/* Demo button - Consistently positioned */}
+                      <div className="absolute bottom-6 right-6 z-20">
                         <Link to="/form">
                           <div className="relative overflow-hidden">
                             <div className={`absolute inset-0 bg-gradient-to-r ${useCase.colorClass} transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500`}></div>
-                            <div className="px-5 py-2.5 bg-white rounded-lg shadow-lg flex items-center space-x-2 relative z-10 group-hover:text-white transition-colors duration-500">
+                            <div className="px-5 py-3 bg-white rounded-lg shadow-lg flex items-center space-x-2 relative z-10 group-hover:text-emerald-800 transition-colors duration-500">
                               <span className="font-medium">View Demo</span>
                               <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -215,18 +238,7 @@ const UseCases = () => {
             ))}
           </div>
           
-          {/* Bottom CTA section */}
-          <div className="mt-16 text-center">
-            <div className="inline-block relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
-              <Link to="/contact">
-                <button className="relative bg-white text-gray-800 px-8 py-4 rounded-full font-medium text-lg shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  Schedule a Demo Today
-                  <span className="ml-2 inline-block transform group-hover:translate-x-1 transition-transform duration-300">→</span>
-                </button>
-              </Link>
-            </div>
-          </div>
+    
         </div>
       </div>
     </section>
