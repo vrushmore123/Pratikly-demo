@@ -209,30 +209,7 @@ const CTA = () => {
       {/* Curved bottom divider */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-50 to-white translate-y-[99px]"></div>
       
-      {/* Floating dots pattern */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-emerald-100"
-            style={{
-              width: Math.random() * 10 + 5,
-              height: Math.random() * 10 + 5,
-              left: `${Math.random() * 100}%`,
-              bottom: `${Math.random() * 30}%`
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.7, 0.3],
-              transition: {
-                duration: Math.random() * 10 + 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
-          />
-        ))}
-      </div>
+    
     </section>
   );
 };
