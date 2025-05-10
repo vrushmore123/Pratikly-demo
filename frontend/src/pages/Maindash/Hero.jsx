@@ -1,6 +1,6 @@
 // src/components/Hero.jsx
 import React from 'react';
-import video from '../../assets/video.mp4';
+import video from '../../assets/Video.mp4';
 import logocircle from '../../assets/circlelogo.png';
 import { Calendar, ArrowRight } from 'lucide-react';
 
@@ -22,7 +22,7 @@ const Hero = () => {
          <div className="hidden sm:block">
       <a
         href="/form"
-        className="group relative inline-flex items-center justify-center gap-2 bg-[#88fb68] text-gray-900 font-bold uppercase tracking-wide px-7 py-3.5 rounded-lg border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-200 overflow-hidden"
+        className="group relative inline-flex items-center justify-center gap-2 bg-[#1a6106] text-gray-900 font-bold uppercase tracking-wide px-7 py-3.5 rounded-lg border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-200 overflow-hidden"
       >
         <span className="absolute right-full top-0 h-full w-12 -translate-x-2 bg-white/20 blur-sm group-hover:animate-shine" />
         <span className="flex items-center gap-2">
