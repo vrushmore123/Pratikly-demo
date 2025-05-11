@@ -109,13 +109,11 @@ const Experience = () => {
   };
 
   return (
-    <section className="px-4 py-16 bg-gray-50 mt-8">
+    <section className="px-4 py-16 bg-gray-50 ">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col gap-12">
           <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4">
-              Comprehensive Solutions
-            </span>
+         
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Empowering Education with <span className="text-green-700">Smart Solutions</span>
             </h2>

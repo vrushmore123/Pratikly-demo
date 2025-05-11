@@ -3,8 +3,24 @@ import React from 'react';
 import video from '../../../public/Video.mp4';
 import logocircle from '../../assets/circlelogo.png';
 import { Calendar, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../Context/LanguageContext';
 
 const Hero = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      title: 'Empowering Education. Enabling Careers.',
+      subtitle: 'Welcome to the Future Learning Platform',
+      button: 'Book a Demo'
+    },
+    sv: {
+      title: 'Främja utbildning. Möjliggör karriärer.',
+      subtitle: 'Välkommen till framtidens lärandeplattform',
+      button: 'Boka en demo'
+    }
+  };
+
   return (
     <>
       <section className="bg-[#ffffff] pt-[100px] pb-[200px] px-10 relative overflow-hidden">
@@ -12,28 +28,26 @@ const Hero = () => {
           <div className="relative">
             <div className="max-w-[580px] ml-[4%] z-10 relative">
               <h1 className="text-[#0b5814] text-[3.5rem] md:text-[4.2rem] font-bold leading-[1.2] tracking-[-0.02em] mb-8">
-                Empowering Education. Enabling Careers.
+                {translations[language].title}
               </h1>
               <div className="my-5 mb-10">
                 <p className="text-xl text-[#000000]">
-                  Welcome to the Future Learning Platform 
+                  {translations[language].subtitle}
                 </p>
               </div>
-         <div className="hidden sm:block">
-      <a
-        href="/form"
-        className="group relative inline-flex items-center justify-center gap-2 bg-[#3feb53] text-gray-900 font-bold uppercase tracking-wide px-7 py-3.5 rounded-lg border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-200 overflow-hidden"
-      >
-        <span className="absolute right-full top-0 h-full w-12 -translate-x-2 bg-white/20 blur-sm group-hover:animate-shine" />
-        <span className="flex items-center gap-2">
-          <Calendar size={18} className="inline-block" />
-          <span>Book a Demo</span>
-          <ArrowRight size={18} className="inline-block transition-transform group-hover:translate-x-1" />
-        </span>
-      </a>
-    </div>
-
-           
+              <div className="hidden sm:block">
+                <a
+                  href="/form"
+                  className="group relative inline-flex items-center justify-center gap-2 bg-[#3feb53] text-gray-900 font-bold uppercase tracking-wide px-7 py-3.5 rounded-lg border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-200 overflow-hidden"
+                >
+                  <span className="absolute right-full top-0 h-full w-12 -translate-x-2 bg-white/20 blur-sm group-hover:animate-shine" />
+                  <span className="flex items-center gap-2">
+                    <Calendar size={18} className="inline-block" />
+                    <span>{translations[language].button}</span>
+                    <ArrowRight size={18} className="inline-block transition-transform group-hover:translate-x-1" />
+                  </span>
+                </a>
+              </div>
             </div>
 
             <div className="ml-32  w-[90%] pt-[52%] absolute top-auto right-auto bottom-[-250px] left-[18%] overflow-hidden">
