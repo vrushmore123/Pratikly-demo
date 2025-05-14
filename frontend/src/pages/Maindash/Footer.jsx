@@ -3,9 +3,67 @@ import { FaLinkedin, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FiArrowUpRight } from 'react-icons/fi';
 import logo from '../../assets/logoPraktikly.png';
+import { useLanguage } from '../../Context/LanguageContext';
 
 const Footer = () => {
+  const { language, changeLanguage } = useLanguage();
   const currentYear = new Date().getFullYear();
+
+  // Translations
+  const translations = {
+    en: {
+      description: "Transforming education through innovative technology solutions for schools and universities worldwide.",
+      product: "Product",
+      features: "Features",
+      pricing: "Pricing",
+      integrations: "Integrations",
+      updates: "Updates",
+      solutions: "Solutions",
+      forSchools: "For Schools",
+      forUniversities: "For Universities",
+      forTeachers: "For Teachers",
+      forStudents: "For Students",
+      resources: "Resources",
+      blog: "Blog",
+      guides: "Guides",
+      webinars: "Webinars",
+      helpCenter: "Help Center",
+      contact: "Contact",
+      getDemo: "Get a Demo",
+      contactSales: "Contact Sales",
+      copyright: `© ${currentYear} YourCompany AB. All rights reserved.`,
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      cookies: "Cookie Settings"
+    },
+    sv: {
+      description: "Förändrar utbildningen genom innovativa tekniklösningar för skolor och universitet världen över.",
+      product: "Produkt",
+      features: "Funktioner",
+      pricing: "Priser",
+      integrations: "Integrationer",
+      updates: "Uppdateringar",
+      solutions: "Lösningar",
+      forSchools: "För Skolor",
+      forUniversities: "För Universitet",
+      forTeachers: "För Lärare",
+      forStudents: "För Studenter",
+      resources: "Resurser",
+      blog: "Blogg",
+      guides: "Guider",
+      webinars: "Webbinarier",
+      helpCenter: "Hjälpcenter",
+      contact: "Kontakt",
+      getDemo: "Få en Demo",
+      contactSales: "Kontakta Försäljning",
+      copyright: `© ${currentYear} YourCompany AB. Alla rättigheter förbehållna.`,
+      privacy: "Integritetspolicy",
+      terms: "Användarvillkor",
+      cookies: "Cookie-inställningar"
+    }
+  };
+
+  const t = translations[language];
 
   return (
     <footer className="bg-gray-900 text-gray-300 pt-20 pb-12 px-6 sm:px-8 lg:px-10">
@@ -26,7 +84,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Transforming education through innovative technology solutions for schools and universities worldwide.
+              {t.description}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -48,43 +106,43 @@ const Footer = () => {
           <div className="md:col-span-8 lg:col-span-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {/* Product */}
             <div>
-              <h3 className="text-white font-semibold text-lg mb-4">Product</h3>
+              <h3 className="text-white font-semibold text-lg mb-4">{t.product}</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Features <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Pricing <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Integrations <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Updates <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.features} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.pricing} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.integrations} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.updates} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
               </ul>
             </div>
 
             {/* Solutions */}
             <div>
-              <h3 className="text-white font-semibold text-lg mb-4">Solutions</h3>
+              <h3 className="text-white font-semibold text-lg mb-4">{t.solutions}</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">For Schools <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">For Universities <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">For Teachers <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">For Students <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.forSchools} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.forUniversities} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.forTeachers} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.forStudents} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
               </ul>
             </div>
 
             {/* Resources */}
             <div>
-              <h3 className="text-white font-semibold text-lg mb-4">Resources</h3>
+              <h3 className="text-white font-semibold text-lg mb-4">{t.resources}</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Blog <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Guides <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Webinars <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Help Center <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.blog} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.guides} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.webinars} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.helpCenter} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h3 className="text-white font-semibold text-lg mb-4">Contact</h3>
+              <h3 className="text-white font-semibold text-lg mb-4">{t.contact}</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Get a Demo <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">Contact Sales <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.getDemo} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+                <li><a href="#" className="flex items-center text-gray-400 hover:text-white transition-colors group">{t.contactSales} <FiArrowUpRight className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
                 <li className="flex items-start">
                   <HiOutlineMail className="mt-1 mr-2 flex-shrink-0" />
                   <a href="mailto:info@company.com" className="text-gray-400 hover:text-white transition-colors">info@company.com</a>
@@ -98,23 +156,25 @@ const Footer = () => {
         <div className="pt-10 flex flex-col md:flex-row justify-between items-center">
           {/* Copyright and Legal */}
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-500 mb-6 md:mb-0">
-            <span>© {currentYear} YourCompany AB. All rights reserved.</span>
+            <span>{t.copyright}</span>
             <div className="hidden sm:block w-px h-4 bg-gray-700"></div>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Cookie Settings</a>
+              <a href="#" className="hover:text-white transition-colors">{t.privacy}</a>
+              <a href="#" className="hover:text-white transition-colors">{t.terms}</a>
+              <a href="#" className="hover:text-white transition-colors">{t.cookies}</a>
             </div>
           </div>
 
           {/* Language Selector */}
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <select className="appearance-none bg-gray-800 border border-gray-700 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500">
-                <option>English</option>
-                <option>Svenska</option>
-                <option>Español</option>
-                <option>Deutsch</option>
+              <select 
+                value={language}
+                onChange={(e) => changeLanguage(e.target.value)}
+                className="appearance-none bg-gray-800 border border-gray-700 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="en">English</option>
+                <option value="sv">Svenska</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">

@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./Context/LanguageContext";
-
+import { ThemeProvider } from "./Context/Themeprovider";
 // Landing Page Components
 import Header from "./pages/Maindash/Header";
 import Hero from "./pages/Maindash/Hero";
@@ -105,6 +105,7 @@ const TeacherLayout = ({ children }) => (
 
 export default function App() {
   return (
+    <ThemeProvider>
     <LanguageProvider>
       <Router>
         <Routes>
@@ -162,5 +163,6 @@ export default function App() {
         </Routes>
       </Router>
     </LanguageProvider>
+    </ThemeProvider>
   );
 }
