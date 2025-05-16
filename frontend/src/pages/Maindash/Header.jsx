@@ -1,467 +1,334 @@
 // src/components/Header.jsx
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FiMoon, FiSun, FiGlobe, FiMenu, FiX } from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
-import logo from "../../assets/logoPraktikly.png";
-import { useLanguage } from "../../Context/LanguageContext";
-import { useTheme } from "../../Context/ThemeProvider";
-import { motion, AnimatePresence } from "framer-motion"; // You'll need to install this package
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
+import { IoIosArrowDown } from 'react-icons/io';
+import logo from '../../assets/logoPraktikly.png';
+import { useLanguage } from '../../Context/LanguageContext';
 
 const Header = () => {
   const [showProducts, setShowProducts] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { language, changeLanguage } = useLanguage();
-  const { darkMode, toggleDarkMode } = useTheme();
-  const mobileMenuRef = useRef(null);
-  const logoRef = useRef(null);
+  const { language, changeLanguage, toggleLanguage } = useLanguage();
 
-  // Handle scrolling effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
+  // Translations
   const translations = {
     en: {
-      products: "Products", lms: "LMS", liaPlatform: "Lia Platform",
-      about: "About Us", contact: "Contact", demo: "Get Demo",
-      login: "Log In", lightMode: "Light Mode", darkMode: "Dark Mode", 
-      language: "Language"
+      products: 'Products',
+      lms: 'LMS',
+      liaPlatform: 'Lia Platform',
+      about: 'About Us',
+      contact: 'Contact',
+      demo: 'Get a Demo',
+      login: 'Log In',
+      lightMode: 'Light Mode',
+      darkMode: 'Dark Mode'
     },
     sv: {
-      products: "Produkter", lms: "LMS", liaPlatform: "Lia Plattform",
-      about: "Om oss", contact: "Kontakt", demo: "Få demo",
-      login: "Logga in", lightMode: "Ljust läge", darkMode: "Mörkt läge",
-      language: "Språk"
+      products: 'Produkter',
+      lms: 'LMS',
+      liaPlatform: 'Lia Plattform',
+      about: 'Om oss',
+      contact: 'Kontakt',
+      demo: 'Få en demo',
+      login: 'Logga in',
+      lightMode: 'Ljust läge',
+      darkMode: 'Mörkt läge'
     }
   };
 
-  const handleLanguageChange = (lang) => {
-    changeLanguage(lang);
-    setMobileMenuOpen(false);
-  };
-
-  // Animation variants for menu items
-  const navItemVariants = {
-    hidden: { opacity: 0, y: -5 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-  // Dropdown animation variants
-  const dropdownVariants = {
-    hidden: { opacity: 0, y: -10, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1 }
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   return (
-    <motion.header 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={` w-full z-50 ${isScrolled ? 'backdrop-blur-md bg-opacity-90' : ''} ${darkMode 
-        ? `bg-gray-900 text-gray-100 ${isScrolled ? 'bg-opacity-90' : ''}` 
-        : `bg-white text-gray-900 ${isScrolled ? 'bg-opacity-90' : ''}`
-      } shadow-sm transition-all duration-500 font-sans`}
-    >
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <header className={`top-0 left-0 right-0 z-50 ${darkMode ? 'bg-gray-900 text-white' : 'bg-[#ffffff] text-[#0d5550]'} transition-colors duration-300 shadow-sm`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 md:h-20">
           
-          {/* Logo with Full Background */}
-          <Link to="/" className="flex items-center group" ref={logoRef}>
-            <div className="relative flex items-center">
-              {/* Logo background container with full coverage */}
-              <div className="relative p-2 rounded-lg bg-gradient-to-r from-indigo-600 to-green-400  shadow-lg">
-                {/* Animated light effects */}
-                <div className="absolute inset-0 rounded-lg overflow-hidden">
-                  {/* Light beam animation */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-20 rotate-45 transform -translate-x-full animate-[beam_3s_ease-in-out_infinite]"></div>
-                  
-                  {/* Radial gradient light effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent opacity-25 rounded-lg"></div>
-                  
-                  {/* Border highlight */}
-                  <div className="absolute inset-0 rounded-lg border border-white opacity-20"></div>
-                </div>
-              
-                {/* Logo with hover zoom effect */}
-                <motion.img 
-                  src={logo} 
-                  alt="Praktikly Logo" 
-                  className="h-10 md:h-12 w-auto relative z-10"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <div className="bg-[#0b750b] rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+                <img
+                  src={logo}
+                  alt="Praktikly Logo"
+                  className="h-10 w-auto"
                 />
               </div>
-              
-              {/* Text that appears on hover */}
-              
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <motion.nav 
-            className="hidden md:flex items-center space-x-8"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            }}
-          >
-            <motion.div 
-              className="relative" 
-              onMouseEnter={() => setShowProducts(true)} 
+          <nav className="hidden md:flex items-center space-x-8">
+            {/* Products Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setShowProducts(true)}
               onMouseLeave={() => setShowProducts(false)}
-              variants={navItemVariants}
-              transition={{ duration: 0.3 }}
             >
-              <motion.button 
-                className={`flex items-center space-x-1 font-medium ${darkMode ? "hover:text-indigo-300" : "hover:text-indigo-600"} transition-colors`}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <span className="font-sans">{translations[language].products}</span>
-                <motion.div
-                  animate={{ rotate: showProducts ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <IoIosArrowDown size={16} />
-                </motion.div>
-              </motion.button>
+              <button className={`flex items-center space-x-1 font-medium focus:outline-none ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}>
+                <span>{translations[language].products}</span>
+                <IoIosArrowDown size={16} className={`transition-transform ${showProducts ? 'transform rotate-180' : ''}`} />
+              </button>
 
-              <AnimatePresence>
-                {showProducts && (
-                  <motion.div 
-                    className={`absolute top-full left-0 mt-2 rounded-lg shadow-xl py-2 w-48 z-50 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={dropdownVariants}
-                    transition={{ duration: 0.3 }}
+              {showProducts && (
+                <div className={`absolute top-full left-0 mt-2 rounded-lg shadow-lg py-2 w-48 z-50 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border'}`}>
+                  <Link
+                    to="/lms"
+                    className={`block px-4 py-2 ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
-                    <Link 
-                      to="/lms" 
-                      className={`block px-4 py-2 ${darkMode ? "text-gray-300 hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"} font-sans transition-colors`}
-                    >
-                      {translations[language].lms}
-                    </Link>
-                    <Link 
-                      to="/liaHUb" 
-                      className={`block px-4 py-2 ${darkMode ? "text-gray-300 hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"} font-sans transition-colors`}
-                    >
-                      {translations[language].liaPlatform}
-                    </Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-
-            {['about', 'contact', 'demo'].map((item) => (
-              <motion.div
-                key={item}
-                variants={navItemVariants}
-                transition={{ duration: 0.3 }}
-              >
-                <Link 
-                  to={`/${item === 'demo' ? 'form' : item}`} 
-                  className={`font-medium ${darkMode ? "hover:text-indigo-300" : "hover:text-indigo-600"} transition-colors font-sans`}
-                >
-                  <motion.span
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    {translations[language].lms}
+                  </Link>
+                  <Link
+                    to="/liaHUb"
+                    className={`block px-4 py-2 ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`}
                   >
-                    {translations[language][item]}
-                  </motion.span>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.nav>
+                    {translations[language].liaPlatform}
+                  </Link>
+                </div>
+              )}
+            </div>
 
-          {/* Desktop Actions */}
-          <motion.div 
-            className="hidden md:flex items-center space-x-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.3
-                }
-              }
-            }}
-          >
-       
-
-            <motion.button
-              onClick={() => handleLanguageChange(language === "en" ? "sv" : "en")}
-              className={`flex items-center space-x-1 font-medium ${darkMode ? "hover:text-indigo-300" : "hover:text-indigo-600"} transition-colors font-sans`}
-              variants={navItemVariants}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            <Link 
+              to="/about" 
+              className={`font-medium ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}
             >
-              <FiGlobe size={20} />
-              <span>{language.toUpperCase()}</span>
-            </motion.button>
+              {translations[language].about}
+            </Link>
+            <Link 
+              to="/" 
+              className={`font-medium ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}
+            >
+              {translations[language].contact}
+            </Link>
+            <Link 
+              to="/form" 
+              className={`font-medium ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}
+            >
+              {translations[language].demo}
+            </Link>
+          </nav>
 
-            <motion.div variants={navItemVariants}>
-              <Link
-                to="/login"
-                className={`px-5 py-2.5 rounded-lg font-medium relative overflow-hidden group`}
-              >
-                <span className={`absolute inset-0 w-full h-full transition-all duration-300 ease-out ${darkMode ? 
-                  "bg-gradient-to-r from-indigo-600 to-indigo-700 group-hover:bg-gradient-to-r group-hover:from-indigo-500 group-hover:to-purple-600" : 
-                  "bg-gradient-to-r from-indigo-600 to-green-700 group-hover:bg-gradient-to-r group-hover:from-indigo-500 group-hover:to-purple-600"}`}></span>
-                
-                {/* Animated button shine effect */}
-                <span className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-30 transition-opacity duration-300">
-                  <span className="absolute inset-0 w-1/12 h-full bg-white transform -skew-x-12 group-hover:animate-shine"></span>
-                </span>
-                
-                <span className="relative text-white font-sans">
-                  {translations[language].login}
-                </span>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-4">
-            <motion.button
+          {/* Right Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            <button 
               onClick={toggleDarkMode}
-              className={`p-2 rounded-full ${darkMode ? "hover:bg-gray-700 text-amber-300" : "hover:bg-gray-100 text-indigo-600"} transition-colors`}
+              className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-700 text-yellow-300' : 'hover:bg-gray-100'}`}
               aria-label={darkMode ? translations[language].lightMode : translations[language].darkMode}
-              whileHover={{ scale: 1.1, rotate: 15 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-            </motion.button>
+              {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
+            </button>
             
-            <motion.button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-md ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"} transition-colors`}
-              aria-expanded={mobileMenuOpen}
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            <div className="relative group">
+              <button 
+                onClick={toggleLanguage}
+                className={`flex items-center space-x-1 font-medium ${darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'}`}
+              >
+                <FiGlobe size={18} />
+                <span>{language.toUpperCase()}</span>
+                <IoIosArrowDown size={14} className="mt-0.5" />
+              </button>
+              <div className={`absolute right-0 mt-2 w-32 rounded-lg shadow-lg py-2 z-50 hidden group-hover:block ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                <button 
+                  onClick={() => changeLanguage('en')}
+                  className={`block w-full text-left px-4 py-2 ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} ${language === 'en' ? (darkMode ? 'bg-gray-700' : 'bg-gray-100') : ''}`}
+                >
+                  English
+                </button>
+                <button 
+                  onClick={() => changeLanguage('sv')}
+                  className={`block w-full text-left px-4 py-2 ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} ${language === 'sv' ? (darkMode ? 'bg-gray-700' : 'bg-gray-100') : ''}`}
+                >
+                  Svenska
+                </button>
+              </div>
+            </div>
+            
+            <Link
+              to="/login"
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${darkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-[#0d5550] hover:bg-[#0b7077] text-white'}`}
             >
-              {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </motion.button>
+              {translations[language].login}
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {mobileMenuOpen ? (
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            ref={mobileMenuRef}
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "spring", damping: 20 }}
-            className={`fixed inset-y-0 left-0 w-72 z-50 ${darkMode ? "bg-gray-900" : "bg-white"} shadow-xl md:hidden overflow-y-auto`}
-          >
-            <div className={`px-5 py-5 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} flex justify-between items-center`}>
-              <Link to="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
-                <div className="relative">
-                  {/* Mobile logo splash animation */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full opacity-70 blur-sm animate-pulse"></div>
-                  <img src={logo} alt="Logo" className="h-8 w-auto relative z-10" />
-                </div>
-                <span className={`ml-3 text-xl font-bold font-serif ${darkMode ? 'text-indigo-200' : 'text-indigo-800'}`}>Praktikly</span>
-              </Link>
-              <motion.button 
-                onClick={() => setMobileMenuOpen(false)} 
-                className={`p-2 ${darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"} rounded-md`}
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <FiX size={24} />
-              </motion.button>
-            </div>
+      {/* Mobile menu - Side drawer that slides from the left */}
+      <div 
+  className={`fixed inset-0  backdrop-blur-md z-40 md:hidden transition-opacity duration-300 ${
+    mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+  }`}
+  onClick={() => setMobileMenuOpen(false)}
+></div>
 
-            <motion.div 
-              className="px-5 py-4 space-y-2"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: 0.07
-                  }
-                }
-              }}
-            >
-              <motion.div 
-                className="relative"
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                <motion.button
-                  onClick={() => setShowProducts(!showProducts)}
-                  className={`w-full flex justify-between items-center px-4 py-3 rounded-lg ${darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"} transition-colors`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <span className="font-sans">{translations[language].products}</span>
-                  <motion.div
-                    animate={{ rotate: showProducts ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <IoIosArrowDown size={18} />
-                  </motion.div>
-                </motion.button>
-
-                <AnimatePresence>
-                  {showProducts && (
-                    <motion.div 
-                      className={`mt-1 mb-2 rounded-lg ${darkMode ? "bg-gray-800" : "bg-gray-100"} overflow-hidden`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Link
-                        to="/lms"
-                        className={`block px-6 py-3 border-b ${darkMode ? "border-gray-700 hover:bg-gray-700" : "border-gray-100 hover:bg-gray-100"} font-sans`}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {translations[language].lms}
-                      </Link>
-                      <Link
-                        to="/liaHUb"
-                        className={`block px-6 py-3 ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"} font-sans`}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {translations[language].liaPlatform}
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-
-              {['about', 'contact', 'demo'].map((item) => (
-                <motion.div
-                  key={item}
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  <Link
-                    to={`/${item === 'demo' ? 'form' : item}`}
-                    className={`block px-4 py-3 rounded-lg ${darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"} transition-colors font-sans`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <motion.div
-                      whileHover={{ x: 5 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                    >
-                      {translations[language][item]}
-                    </motion.div>
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <motion.div 
-              className={`absolute bottom-0 left-0 right-0 border-t ${darkMode ? 'border-gray-700' : 'border-gray-200'} p-5`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <div className="mb-5">
-                <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-500'} font-sans`}>
-                  {translations[language].language}
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {['en', 'sv'].map((lang) => (
-                    <motion.button
-                      key={lang}
-                      onClick={() => handleLanguageChange(lang)}
-                      className={`px-4 py-2 rounded-lg ${language === lang ? 
-                        (darkMode ? "bg-indigo-600 text-white" : "bg-indigo-100 text-indigo-700 font-medium") : 
-                        (darkMode ? "text-gray-300 hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100")} transition-colors font-sans`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {lang === 'en' ? 'English' : 'Svenska'}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-
-              <motion.button
-                onClick={toggleDarkMode}
-                className={`w-full flex items-center justify-center px-4 py-3 rounded-lg mb-4 ${darkMode ? "bg-gray-800 text-amber-300 hover:bg-gray-700" : "bg-gray-100 text-indigo-600 hover:bg-gray-200"} transition-colors font-sans`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {darkMode ? <FiSun size={18} className="mr-2" /> : <FiMoon size={18} className="mr-2" />}
-                {darkMode ? translations[language].lightMode : translations[language].darkMode}
-              </motion.button>
-
-              <Link
-                to="/login"
-                className="block w-full overflow-hidden rounded-lg relative"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <motion.div
-                  className={`w-full px-4 py-3 text-center font-medium bg-gradient-to-r ${darkMode ? "from-indigo-600 to-indigo-700" : "from-indigo-600 to-indigo-700"} text-white shadow-md font-sans relative z-10`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {translations[language].login}
-                </motion.div>
-                
-                {/* Animated button glow effect */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 opacity-0 z-0"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 0.3 }}
-                  transition={{ duration: 0.3 }}
-                ></motion.div>
-              </Link>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       
-      {/* Global styles for animations */}
-      <style jsx global>{`
-        @keyframes shine {
-          from {transform: translateX(-100%) skewX(-12deg);}
-          to {transform: translateX(200%) skewX(-12deg);}
-        }
-        .animate-shine {
-          animation: shine 1.5s ease infinite;
-        }
-      `}</style>
-    </motion.header>
+      <div 
+        className={`fixed top-0 left-0 bottom-0 w-64 md:hidden z-50 transform transition-transform duration-300 ease-in-out ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } ${darkMode ? 'bg-gray-900' : 'bg-white'} shadow-xl overflow-y-auto`}
+      >
+        {/* Logo in mobile menu */}
+        <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <Link to="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+            <div className="bg-[#0b750b] rounded-lg p-1 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+              <img
+                src={logo}
+                alt="Praktikly Logo"
+                className="h-8 w-auto"
+              />
+            </div>
+            <span className="ml-2 font-semibold text-lg">Praktikly</span>
+          </Link>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className={`p-2 rounded-md ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
+          >
+            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div className="px-4 py-3 space-y-1">
+          {/* Mobile Products Dropdown */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowProducts(!showProducts)}
+              className={`w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}
+            >
+              <span>{translations[language].products}</span>
+              <IoIosArrowDown 
+                size={18} 
+                className={`transition-transform duration-200 ${showProducts ? 'transform rotate-180' : ''}`} 
+              />
+            </button>
+            
+            {showProducts && (
+              <div className={`mt-1 mb-2 rounded-md overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                <Link
+                  to="/lms"
+                  className={`block px-6 py-3 text-base font-medium border-b ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-100'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {translations[language].lms}
+                </Link>
+                <Link
+                  to="/liaHUb"
+                  className={`block px-6 py-3 text-base font-medium ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {translations[language].liaPlatform}
+                </Link>
+              </div>
+            )}
+          </div>
+          
+          <Link
+            to="/about"
+            className={`block px-3 py-3 rounded-md text-base font-medium ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {translations[language].about}
+          </Link>
+          <Link
+            to="/"
+            className={`block px-3 py-3 rounded-md text-base font-medium ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {translations[language].contact}
+          </Link>
+          <Link
+            to="/form"
+            className={`block px-3 py-3 rounded-md text-base font-medium ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {translations[language].demo}
+          </Link>
+        </div>
+        
+        {/* Mobile bottom actions */}
+        <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 dark:border-gray-700">
+          {/* Language selector in mobile */}
+          <div className="px-4 py-3">
+            <p className="px-2 text-sm text-gray-500 dark:text-gray-400">
+              {language === 'en' ? 'Language' : 'Språk'}
+            </p>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <button 
+                onClick={() => changeLanguage('en')}
+                className={`px-3 py-2 rounded-md text-center ${
+                  language === 'en' 
+                    ? (darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-[#0d5550] font-medium') 
+                    : (darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50')
+                }`}
+              >
+                English
+              </button>
+              <button 
+                onClick={() => changeLanguage('sv')}
+                className={`px-3 py-2 rounded-md text-center ${
+                  language === 'sv' 
+                    ? (darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-[#0d5550] font-medium') 
+                    : (darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50')
+                }`}
+              >
+                Svenska
+              </button>
+            </div>
+          </div>
+          
+          {/* Theme toggle and login */}
+          <div className="px-4 py-4 space-y-3">
+            <button 
+              onClick={toggleDarkMode}
+              className={`flex items-center w-full px-3 py-2 rounded-md ${
+                darkMode 
+                  ? 'bg-gray-800 text-yellow-300' 
+                  : 'bg-gray-50 text-gray-700'
+              }`}
+            >
+              {darkMode ? <FiSun size={18} className="mr-2" /> : <FiMoon size={18} className="mr-2" />}
+              {darkMode ? translations[language].lightMode : translations[language].darkMode}
+            </button>
+            
+            <Link
+              to="/login"
+              className={`block w-full px-3 py-2 rounded-md font-medium text-white text-center ${
+                darkMode 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : 'bg-[#0d5550] hover:bg-[#0b7077]'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {translations[language].login}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

@@ -1,28 +1,22 @@
-// src/Context/LanguageContext.js
+// src/contexts/LanguageContext.jsx
 import React, { createContext, useState, useContext } from 'react';
 
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en'); // default to English
-  
-  const changeLanguage = (lang) => {
-    setLanguage(lang);
-    // You might want to store this in localStorage for persistence
-    localStorage.setItem('language', lang);
+  const [language, setLanguage] = useState('en'); // Default to English
+
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'en' ? 'sv' : 'en');
   };
 
   return (
-    <LanguageContext.Provider value={{ language, changeLanguage }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
 export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
+  return useContext(LanguageContext);
 };
