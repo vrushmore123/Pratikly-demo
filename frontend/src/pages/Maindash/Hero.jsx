@@ -4,10 +4,11 @@ import video from '../../../public/Video.mp4';
 import logocircle from '../../assets/circlelogo.png';
 import { Calendar, ArrowRight, Play } from 'lucide-react';
 import { useLanguage } from '../../Context/LanguageContext';
-
+import { useTheme } from '../../Context/ThemeContext'; // Add this import
 const Hero = () => {
   const { language } = useLanguage();
   const [rotation, setRotation] = useState(0);
+    const { darkMode } = useTheme(); // Get darkMode from context
 
   // Logo rotation effect
   useEffect(() => {
@@ -36,7 +37,7 @@ const Hero = () => {
   return (
 <>
   <section className="bg-[#ffffff] pt-16 md:pt-[100px] pb-20 md:pb-[120px] px-6 sm:px-6 relative overflow-hidden">
-    <div className="max-w-[1400px] mx-auto mt-12">
+    <div className="max-w-[1400px] mx-auto mt-20 md:mt-24 ">
       <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
         {/* Left Content */}
         <div className="w-full md:w-1/2 z-10">
@@ -125,4 +126,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;  

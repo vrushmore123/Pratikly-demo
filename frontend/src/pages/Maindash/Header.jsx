@@ -56,8 +56,8 @@ const Header = () => {
   };
 
   return (
-    <header className={`top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      darkMode ? 'bg-gray-900 text-white' : 'bg-white/90 text-[#0d5550]'
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      darkMode ? 'bg-gray-900/90 text-white' : 'bg-white/90 text-[#0d5550]'
     } ${
       scrolled ? 'backdrop-blur-md shadow-lg' : 'backdrop-blur-sm'
     }`}>
@@ -88,6 +88,11 @@ const Header = () => {
         ))}
       </div>
 
+      {/* Glowing border effect */}
+      <div className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent ${
+        scrolled ? 'opacity-100' : 'opacity-0'
+      } transition-opacity duration-300`}></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           
@@ -116,8 +121,17 @@ const Header = () => {
                   alt="Praktikly Logo"
                   className="h-8 w-auto"
                 />
-                
               </motion.div>
+              <motion.span 
+                className={`ml-3 text-xl font-bold ${
+                  darkMode ? 'text-white' : 'text-[#0d5550]'
+                }`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                
+              </motion.span>
             </Link>
           </motion.div>
 
@@ -149,8 +163,8 @@ const Header = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className={`absolute top-full left-0 mt-2 rounded-lg shadow-lg py-2 w-56 z-50 ${
-                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border'
+                    className={`absolute top-full left-0 mt-2 rounded-xl shadow-xl py-2 w-56 z-50 ${
+                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border border-gray-100'
                     }`}
                   >
                     <Link
@@ -158,7 +172,7 @@ const Header = () => {
                       className={`block px-4 py-3 transition-colors ${
                         darkMode 
                           ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
-                          : 'text-gray-700 hover:bg-gray-100 hover:text-[#0b7077]'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-[#0b7077]'
                       }`}
                     >
                       <div className="flex items-center">
@@ -171,7 +185,7 @@ const Header = () => {
                       className={`block px-4 py-3 transition-colors ${
                         darkMode 
                           ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
-                          : 'text-gray-700 hover:bg-gray-100 hover:text-[#0b7077]'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-[#0b7077]'
                       }`}
                     >
                       <div className="flex items-center">
@@ -225,7 +239,7 @@ const Header = () => {
             <motion.button 
               onClick={toggleDarkMode}
               className={`p-2 rounded-full ${
-                darkMode ? 'hover:bg-gray-700 text-yellow-300' : 'hover:bg-gray-100'
+                darkMode ? 'hover:bg-gray-700/50 text-yellow-300' : 'hover:bg-gray-100'
               }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -248,18 +262,18 @@ const Header = () => {
                 <span>{language.toUpperCase()}</span>
                 <IoIosArrowDown size={14} className="mt-0.5" />
               </button>
-              <div className={`absolute right-0 mt-2 w-32 rounded-lg shadow-lg py-2 z-50 hidden group-hover:block ${
-                darkMode ? 'bg-gray-800' : 'bg-white'
+              <div className={`absolute right-0 mt-2 w-32 rounded-xl shadow-xl py-2 z-50 hidden group-hover:block ${
+                darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-100'
               }`}>
                 <button 
                   onClick={() => changeLanguage('en')}
                   className={`block w-full text-left px-4 py-2 transition-colors ${
                     darkMode 
                       ? 'hover:bg-gray-700' 
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-50'
                   } ${
                     language === 'en' 
-                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-100 font-medium text-[#0b7077]') 
+                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-50 font-medium text-[#0b7077]') 
                       : ''
                   }`}
                 >
@@ -270,10 +284,10 @@ const Header = () => {
                   className={`block w-full text-left px-4 py-2 transition-colors ${
                     darkMode 
                       ? 'hover:bg-gray-700' 
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-50'
                   } ${
                     language === 'sv' 
-                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-100 font-medium text-[#0b7077]') 
+                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-50 font-medium text-[#0b7077]') 
                       : ''
                   }`}
                 >
@@ -288,7 +302,7 @@ const Header = () => {
             >
               <Link
                 to="/login"
-                className={`px-5 py-2.5 rounded-md font-medium transition-all flex items-center ${
+                className={`px-5 py-2.5 rounded-lg font-medium transition-all flex items-center ${
                   darkMode 
                     ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-blue-500/30' 
                     : 'bg-gradient-to-r from-[#0d5550] to-[#0b7077] hover:from-[#0b7077] hover:to-[#0a5a6e] text-white shadow-lg hover:shadow-[#0b7077]/30'
@@ -305,7 +319,7 @@ const Header = () => {
             <button 
               onClick={toggleDarkMode}
               className={`p-2 rounded-full ${
-                darkMode ? 'hover:bg-gray-700 text-yellow-300' : 'hover:bg-gray-100'
+                darkMode ? 'hover:bg-gray-700/50 text-yellow-300' : 'hover:bg-gray-100'
               }`}
             >
               {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
@@ -314,7 +328,7 @@ const Header = () => {
             <motion.button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none ${
-                darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-100'
               }`}
               whileTap={{ scale: 0.9 }}
               aria-expanded="false"
@@ -377,7 +391,7 @@ const Header = () => {
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className={`p-2 rounded-md ${
-                    darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
+                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-100'
                   }`}
                 >
                   <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -392,7 +406,7 @@ const Header = () => {
                   <button 
                     onClick={() => setShowProducts(!showProducts)}
                     className={`w-full flex justify-between items-center px-4 py-3 rounded-lg text-base font-medium ${
-                      darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'
+                      darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
                     }`}
                   >
                     <span>{translations[language].products}</span>
@@ -412,13 +426,13 @@ const Header = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                         className={`mt-1 mb-3 rounded-lg overflow-hidden ${
-                          darkMode ? 'bg-gray-800' : 'bg-gray-50'
+                          darkMode ? 'bg-gray-800/50' : 'bg-gray-50'
                         }`}
                       >
                         <Link
                           to="/lms"
                           className={`block px-6 py-3 text-base font-medium border-b ${
-                            darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-100'
+                            darkMode ? 'border-gray-700 hover:bg-gray-700/50' : 'border-gray-100 hover:bg-gray-100'
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -430,7 +444,7 @@ const Header = () => {
                         <Link
                           to="/liaHUb"
                           className={`block px-6 py-3 text-base font-medium ${
-                            darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                            darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-100'
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -449,7 +463,7 @@ const Header = () => {
                 <Link
                   to="/about"
                   className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'
+                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -458,7 +472,7 @@ const Header = () => {
                 <Link
                   to="/contact"
                   className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'
+                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -467,7 +481,7 @@ const Header = () => {
                 <Link
                   to="/form"
                   className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-50'
+                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -487,13 +501,13 @@ const Header = () => {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => changeLanguage('en')}
-                      className={`px-4 py-2.5 rounded-md text-center ${
+                      className={`px-4 py-2.5 rounded-lg text-center ${
                         language === 'en' 
                           ? (darkMode 
                               ? 'bg-blue-600 text-white' 
                               : 'bg-[#0d5550] text-white font-medium') 
                           : (darkMode 
-                              ? 'text-gray-300 hover:bg-gray-700' 
+                              ? 'text-gray-300 hover:bg-gray-700/50' 
                               : 'text-gray-700 hover:bg-gray-100')
                       }`}
                     >
@@ -502,13 +516,13 @@ const Header = () => {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => changeLanguage('sv')}
-                      className={`px-4 py-2.5 rounded-md text-center ${
+                      className={`px-4 py-2.5 rounded-lg text-center ${
                         language === 'sv' 
                           ? (darkMode 
                               ? 'bg-blue-600 text-white' 
                               : 'bg-[#0d5550] text-white font-medium') 
                           : (darkMode 
-                              ? 'text-gray-300 hover:bg-gray-700' 
+                              ? 'text-gray-300 hover:bg-gray-700/50' 
                               : 'text-gray-700 hover:bg-gray-100')
                       }`}
                     >
