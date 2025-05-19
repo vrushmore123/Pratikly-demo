@@ -8,7 +8,10 @@ import Header from "./pages/Maindash/Header";
 import Hero from "./pages/Maindash/Hero";
 import Experience from "./pages/Maindash/Experience";
 import UseCases from "./pages/Maindash/UseCases";
-import CTA from "./pages/Maindash/CTA";
+import ForStudents from "./pages/Maindash/ForStudents";
+import ForAudiences from "./pages/Maindash/ForAudiences";
+
+import Matters from "./pages/Maindash/Matters";
 import Footer from "./pages/Maindash/Footer";
 import Forms from "./pages/Maindash/Form/DemoBookingForm";
 import LiaHub from "./pages/Maindash/Products/LiaHub";
@@ -55,6 +58,8 @@ import StudentCourses from "./components/Teacher/Student";
 import NotificationPreferences from "./components/Teacher/Communication/Notifications";
 import ManageGroups from "./components/Teacher/groups/ManageGroups";
 
+import { ThemeProvider } from "./Context/ThemeContext";
+
 // Layout components
 const Layout = ({ children }) => (
   <div className="font-poppins text-black dark:text-white bg-white dark:bg-gray-900 min-h-screen">
@@ -70,7 +75,10 @@ const LandingPage = () => (
       <Hero />
       <Experience />
       <UseCases />
-      <CTA />
+      <ForStudents />
+      <ForAudiences/>
+     <Matters />
+     
     </main>
     <Footer />
   </Layout>
@@ -105,6 +113,7 @@ const TeacherLayout = ({ children }) => (
 
 export default function App() {
   return (
+    <ThemeProvider>
     <LanguageProvider>
       <Router>
         <Routes>
@@ -162,5 +171,6 @@ export default function App() {
         </Routes>
       </Router>
     </LanguageProvider>
+    </ThemeProvider>
   );
 }
