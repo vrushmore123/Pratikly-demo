@@ -44,7 +44,7 @@ const Header = () => {
       about: 'Om oss',
       contact: 'Kontakt',
       demo: 'Få en demo',
-      login: 'Instrumentpanel',
+      login: 'inloggning',
       lightMode: 'Ljust läge',
       darkMode: 'Mörkt läge'
     }
@@ -57,17 +57,18 @@ const Header = () => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      darkMode ? 'bg-gray-900/90 text-white' : 'bg-white/90 text-[#0d5550]'
+      darkMode ? 'bg-black/90 text-white' : 'bg-white/90 text-[#0d5550]'
     } ${
       scrolled ? 'backdrop-blur-md shadow-lg' : 'backdrop-blur-sm'
-    }`}>
+    }`}
+    style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[1, 2, 3].map((i) => (
           <motion.div
             key={i}
             className={`absolute rounded-full filter blur-xl opacity-10 ${
-              darkMode ? 'bg-blue-400' : 'bg-[#0b750b]'
+              darkMode ? 'bg-purple-400' : 'bg-[#0b750b]'
             }`}
             style={{
               width: `${100 + i * 50}px`,
@@ -78,6 +79,7 @@ const Header = () => {
             animate={{
               y: [0, 15, 0],
               x: [0, 5, 0],
+              scale: [1, 1.05, 1],
             }}
             transition={{
               duration: 5 + i * 2,
@@ -88,52 +90,59 @@ const Header = () => {
         ))}
       </div>
 
-      {/* Glowing border effect */}
-      <div className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent ${
+      {/* Glowing border effect - now circular on edges */}
+      <div className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent rounded-full ${
         scrolled ? 'opacity-100' : 'opacity-0'
       } transition-opacity duration-300`}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           
-          {/* Logo with animation */}
-          <motion.div 
-            className="flex-shrink-0"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Link to="/" className="flex items-center">
-              <motion.div 
-                className={`rounded-lg p-2 shadow-md flex items-center justify-center ${
-                  darkMode ? 'bg-[#0b750b]' : 'bg-gradient-to-br from-[#0b750b] to-[#0d5550]'
-                }`}
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: darkMode 
-                    ? '0 10px 25px -5px rgba(11, 117, 11, 0.4)' 
-                    : '0 10px 25px -5px rgba(13, 85, 80, 0.3)'
-                }}
-                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-              >
-                <img
-                  src={logo}
-                  alt="Praktikly Logo"
-                  className="h-8 w-auto"
-                />
-              </motion.div>
-              <motion.span 
-                className={`ml-3 text-xl font-bold ${
-                  darkMode ? 'text-white' : 'text-[#0d5550]'
-                }`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                
-              </motion.span>
-            </Link>
-          </motion.div>
+      
+         {/* Logo with animation - now circular */}
+<motion.div 
+  className="flex-shrink-0"
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  <Link to="/" className="flex items-center">
+    <motion.div 
+      className={`rounded-full p-2 shadow-md flex items-center justify-center ${
+        darkMode ? 'bg-[#0b750b]' : 'bg-gradient-to-br from-[#0b750b] to-[#030104]'
+      }`}
+      style={{ 
+        background: darkMode 
+          ? 'linear-gradient(135deg, #0b750b 20%, #000000 20%)' 
+          : 'linear-gradient(135deg, #0b750b 20%, #5a0dad 20%)'
+      }}
+      whileHover={{ 
+        scale: 1,
+        rotate: 5,
+        boxShadow: darkMode 
+          ? '0 10px 25px -5px rgba(11, 117, 11, 0.4)' 
+          : '0 10px 25px -5px rgba(90, 13, 173, 0.3)'
+      }}
+      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+    >
+      <img
+        src={logo}
+        alt="Praktikly Logo"
+        className="h-8 w-auto"
+      />
+    </motion.div>
+    <motion.span 
+      className={`ml-3 text-xl font-bold ${
+        darkMode ? 'text-white' : 'text-[#5a0dad]'
+      }`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2 }}
+    >
+      
+    </motion.span>
+  </Link>
+</motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -145,7 +154,7 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
             >
               <button className={`flex items-center space-x-1 font-medium focus:outline-none ${
-                darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'
+                darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
               }`}>
                 <span>{translations[language].products}</span>
                 <motion.div
@@ -164,14 +173,14 @@ const Header = () => {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                     className={`absolute top-full left-0 mt-2 rounded-xl shadow-xl py-2 w-56 z-50 ${
-                      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border border-gray-100'
+                      darkMode ? 'bg-black border-gray-800' : 'bg-white border border-gray-100'
                     }`}
                   >
                     <Link
                       to="/lms"
                       className={`block px-4 py-3 transition-colors ${
                         darkMode 
-                          ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
+                          ? 'text-gray-300 hover:bg-gray-900 hover:text-white' 
                           : 'text-gray-700 hover:bg-gray-50 hover:text-[#0b7077]'
                       }`}
                     >
@@ -184,7 +193,7 @@ const Header = () => {
                       to="/liaHUb"
                       className={`block px-4 py-3 transition-colors ${
                         darkMode 
-                          ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
+                          ? 'text-gray-300 hover:bg-gray-900 hover:text-white' 
                           : 'text-gray-700 hover:bg-gray-50 hover:text-[#0b7077]'
                       }`}
                     >
@@ -200,33 +209,42 @@ const Header = () => {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.05 }}>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <Link 
                 to="/about" 
                 className={`font-medium ${
-                  darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'
+                  darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
                 }`}
               >
                 {translations[language].about}
               </Link>
             </motion.div>
             
-            <motion.div whileHover={{ scale: 1.05 }}>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <Link 
                 to="/contact" 
                 className={`font-medium ${
-                  darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'
+                  darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
                 }`}
               >
                 {translations[language].contact}
               </Link>
             </motion.div>
             
-            <motion.div whileHover={{ scale: 1.05 }}>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <Link 
                 to="/form" 
                 className={`font-medium ${
-                  darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'
+                  darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
                 }`}
               >
                 {translations[language].demo}
@@ -239,10 +257,10 @@ const Header = () => {
             <motion.button 
               onClick={toggleDarkMode}
               className={`p-2 rounded-full ${
-                darkMode ? 'hover:bg-gray-700/50 text-yellow-300' : 'hover:bg-gray-100'
+                darkMode ? 'hover:bg-gray-900 text-yellow-300' : 'hover:bg-gray-100'
               }`}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.1, rotate: 15 }}
+              whileTap={{ scale: 0.9, rotate: -15 }}
               aria-label={darkMode ? translations[language].lightMode : translations[language].darkMode}
             >
               {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
@@ -255,7 +273,7 @@ const Header = () => {
               <button 
                 onClick={toggleLanguage}
                 className={`flex items-center space-x-1 font-medium ${
-                  darkMode ? 'hover:text-blue-300' : 'hover:text-[#0b7077]'
+                  darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
                 }`}
               >
                 <FiGlobe size={18} />
@@ -263,17 +281,17 @@ const Header = () => {
                 <IoIosArrowDown size={14} className="mt-0.5" />
               </button>
               <div className={`absolute right-0 mt-2 w-32 rounded-xl shadow-xl py-2 z-50 hidden group-hover:block ${
-                darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-100'
+                darkMode ? 'bg-black border border-gray-800' : 'bg-white border border-gray-100'
               }`}>
                 <button 
                   onClick={() => changeLanguage('en')}
                   className={`block w-full text-left px-4 py-2 transition-colors ${
                     darkMode 
-                      ? 'hover:bg-gray-700' 
+                      ? 'hover:bg-gray-900' 
                       : 'hover:bg-gray-50'
                   } ${
                     language === 'en' 
-                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-50 font-medium text-[#0b7077]') 
+                      ? (darkMode ? 'bg-gray-900' : 'bg-gray-50 font-medium text-[#0b7077]') 
                       : ''
                   }`}
                 >
@@ -283,11 +301,11 @@ const Header = () => {
                   onClick={() => changeLanguage('sv')}
                   className={`block w-full text-left px-4 py-2 transition-colors ${
                     darkMode 
-                      ? 'hover:bg-gray-700' 
+                      ? 'hover:bg-gray-900' 
                       : 'hover:bg-gray-50'
                   } ${
                     language === 'sv' 
-                      ? (darkMode ? 'bg-gray-700' : 'bg-gray-50 font-medium text-[#0b7077]') 
+                      ? (darkMode ? 'bg-gray-900' : 'bg-gray-50 font-medium text-[#0b7077]') 
                       : ''
                   }`}
                 >
@@ -297,14 +315,14 @@ const Header = () => {
             </motion.div>
             
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link
                 to="/login"
-                className={`px-5 py-2.5 rounded-lg font-medium transition-all flex items-center ${
+                className={`px-5 py-2.5 rounded-full font-medium transition-all flex items-center ${
                   darkMode 
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-blue-500/30' 
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-700 hover:from-purple-700 hover:to-blue-800 text-white shadow-lg hover:shadow-purple-500/30' 
                     : 'bg-gradient-to-r from-[#0d5550] to-[#0b7077] hover:from-[#0b7077] hover:to-[#0a5a6e] text-white shadow-lg hover:shadow-[#0b7077]/30'
                 }`}
               >
@@ -316,21 +334,23 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
-            <button 
+            <motion.button 
               onClick={toggleDarkMode}
               className={`p-2 rounded-full ${
-                darkMode ? 'hover:bg-gray-700/50 text-yellow-300' : 'hover:bg-gray-100'
+                darkMode ? 'hover:bg-gray-900 text-yellow-300' : 'hover:bg-gray-100'
               }`}
+              whileHover={{ scale: 1.1, rotate: 15 }}
+              whileTap={{ scale: 0.9 }}
             >
               {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
-            </button>
+            </motion.button>
             
             <motion.button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none ${
-                darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-100'
+              className={`inline-flex items-center justify-center p-2 rounded-full focus:outline-none ${
+                darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-100'
               }`}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.9, rotate: mobileMenuOpen ? -90 : 0 }}
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -356,7 +376,7 @@ const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md z-40"
               onClick={() => setMobileMenuOpen(false)}
             />
             
@@ -366,8 +386,8 @@ const Header = () => {
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               className={`fixed top-0 left-0 bottom-0 w-80 max-w-full z-50 ${
-                darkMode ? 'bg-gray-900' : 'bg-white'
-              } shadow-2xl overflow-y-auto`}
+                darkMode ? 'bg-black' : 'bg-white'
+              } shadow-2xl overflow-y-auto rounded-r-3xl`}
             >
               <div className="px-6 py-5 border-b flex items-center justify-between">
                 <Link 
@@ -375,29 +395,35 @@ const Header = () => {
                   className="flex items-center" 
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <div className={`rounded-lg p-2 ${
-                    darkMode ? 'bg-[#0b750b]' : 'bg-gradient-to-br from-[#0b750b] to-[#0d5550]'
-                  }`}>
+                  <motion.div 
+                    className={`rounded-full p-2 ${
+                      darkMode ? 'bg-[#0b750b]' : 'bg-gradient-to-br from-[#0b750b] to-[#0d5550]'
+                    }`}
+                    style={{ background: `linear-gradient(135deg, #0b750b 20%, ${darkMode ? '#000000' : '#ffffff'} 20%)` }}
+                    whileHover={{ rotate: 10 }}
+                  >
                     <img
                       src={logo}
                       alt="Praktikly Logo"
                       className="h-8 w-auto"
                     />
-                  </div>
+                  </motion.div>
                   <span className={`ml-3 font-bold text-lg ${
                     darkMode ? 'text-white' : 'text-[#0d5550]'
                   }`}>PRAKTIKLY</span>
                 </Link>
-                <button
+                <motion.button
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`p-2 rounded-md ${
-                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-100'
+                  className={`p-2 rounded-full ${
+                    darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-100'
                   }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9, rotate: -90 }}
                 >
                   <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                </button>
+                </motion.button>
               </div>
               
               <div className="px-4 py-6 space-y-2">
@@ -405,8 +431,8 @@ const Header = () => {
                 <div className="relative">
                   <button 
                     onClick={() => setShowProducts(!showProducts)}
-                    className={`w-full flex justify-between items-center px-4 py-3 rounded-lg text-base font-medium ${
-                      darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
+                    className={`w-full flex justify-between items-center px-4 py-3 rounded-full text-base font-medium ${
+                      darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-50'
                     }`}
                   >
                     <span>{translations[language].products}</span>
@@ -425,14 +451,14 @@ const Header = () => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className={`mt-1 mb-3 rounded-lg overflow-hidden ${
-                          darkMode ? 'bg-gray-800/50' : 'bg-gray-50'
+                        className={`mt-1 mb-3 rounded-xl overflow-hidden ${
+                          darkMode ? 'bg-gray-900' : 'bg-gray-50'
                         }`}
                       >
                         <Link
                           to="/lms"
                           className={`block px-6 py-3 text-base font-medium border-b ${
-                            darkMode ? 'border-gray-700 hover:bg-gray-700/50' : 'border-gray-100 hover:bg-gray-100'
+                            darkMode ? 'border-gray-800 hover:bg-gray-800' : 'border-gray-100 hover:bg-gray-100'
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -444,7 +470,7 @@ const Header = () => {
                         <Link
                           to="/liaHUb"
                           className={`block px-6 py-3 text-base font-medium ${
-                            darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-100'
+                            darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -460,33 +486,41 @@ const Header = () => {
                   </AnimatePresence>
                 </div>
                 
-                <Link
-                  to="/about"
-                  className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {translations[language].about}
-                </Link>
-                <Link
-                  to="/contact"
-                  className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {translations[language].contact}
-                </Link>
-                <Link
-                  to="/form"
-                  className={`block px-4 py-3 rounded-lg text-base font-medium ${
-                    darkMode ? 'hover:bg-gray-800/50' : 'hover:bg-gray-50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {translations[language].demo}
-                </Link>
+                <motion.div whileHover={{ x: 5 }}>
+                  <Link
+                    to="/about"
+                    className={`block px-4 py-3 rounded-full text-base font-medium ${
+                      darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {translations[language].about}
+                  </Link>
+                </motion.div>
+                
+                <motion.div whileHover={{ x: 5 }}>
+                  <Link
+                    to="/contact"
+                    className={`block px-4 py-3 rounded-full text-base font-medium ${
+                      darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {translations[language].contact}
+                  </Link>
+                </motion.div>
+                
+                <motion.div whileHover={{ x: 5 }}>
+                  <Link
+                    to="/form"
+                    className={`block px-4 py-3 rounded-full text-base font-medium ${
+                      darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {translations[language].demo}
+                  </Link>
+                </motion.div>
               </div>
               
               {/* Mobile bottom actions */}
@@ -501,13 +535,13 @@ const Header = () => {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => changeLanguage('en')}
-                      className={`px-4 py-2.5 rounded-lg text-center ${
+                      className={`px-4 py-2.5 rounded-full text-center ${
                         language === 'en' 
                           ? (darkMode 
-                              ? 'bg-blue-600 text-white' 
+                              ? 'bg-purple-600 text-white' 
                               : 'bg-[#0d5550] text-white font-medium') 
                           : (darkMode 
-                              ? 'text-gray-300 hover:bg-gray-700/50' 
+                              ? 'text-gray-300 hover:bg-gray-900' 
                               : 'text-gray-700 hover:bg-gray-100')
                       }`}
                     >
@@ -516,13 +550,13 @@ const Header = () => {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => changeLanguage('sv')}
-                      className={`px-4 py-2.5 rounded-lg text-center ${
+                      className={`px-4 py-2.5 rounded-full text-center ${
                         language === 'sv' 
                           ? (darkMode 
-                              ? 'bg-blue-600 text-white' 
+                              ? 'bg-purple-600 text-white' 
                               : 'bg-[#0d5550] text-white font-medium') 
                           : (darkMode 
-                              ? 'text-gray-300 hover:bg-gray-700/50' 
+                              ? 'text-gray-300 hover:bg-gray-900' 
                               : 'text-gray-700 hover:bg-gray-100')
                       }`}
                     >
@@ -533,12 +567,13 @@ const Header = () => {
                 
                 <motion.div
                   whileTap={{ scale: 0.98 }}
+                  whileHover={{ y: -2 }}
                 >
                   <Link
                     to="/login"
-                    className={`block w-full px-4 py-3 rounded-lg font-medium text-white text-center ${
+                    className={`block w-full px-4 py-3 rounded-full font-medium text-white text-center ${
                       darkMode 
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800' 
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-700 hover:from-purple-700 hover:to-blue-800' 
                         : 'bg-gradient-to-r from-[#0d5550] to-[#0b7077] hover:from-[#0b7077] hover:to-[#0a5a6e]'
                     } flex items-center justify-center`}
                     onClick={() => setMobileMenuOpen(false)}

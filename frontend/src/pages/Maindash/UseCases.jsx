@@ -175,7 +175,7 @@ const UseCases = () => {
         <div className="text-center pb-16 sm:pb-20 lg:pb-24 relative">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 inline-block relative">
             <span className="text-gray-900">
-              {language === 'en' ? '6 Key Features' : '6 Nyckelfunktioner'}
+              {language === 'en' ? 'Key Features' : 'Nyckelfunktioner'}
             </span>
             <div className="absolute -bottom-3 left-0 h-1.5 w-0 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full animate-expand"></div>
           </h2>
