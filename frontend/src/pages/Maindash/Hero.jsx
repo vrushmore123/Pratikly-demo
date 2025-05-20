@@ -1,4 +1,3 @@
-// src/components/Hero.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import video from '../../../public/Video.mp4';
 import logocircle from '../../assets/circlelogo.png';
@@ -59,15 +58,27 @@ const Hero = () => {
 
   return (
     <>
-      <section ref={heroRef} className="relative overflow-hidden pt-16 md:pt-[100px] pb-20 md:pb-[120px] px-6 sm:px-6">
+      <section ref={heroRef} className={`relative overflow-hidden pt-16 md:pt-[100px] pb-20 md:pb-[120px] px-6 sm:px-6 ${
+        darkMode ? 'bg-gray-900' : 'bg-white'
+      }`}>
         {/* Animated Background with subtle circular glowing effect */}
-        <div className="absolute inset-0 bg-white overflow-hidden">
+        <div className={`absolute inset-0 overflow-hidden ${
+          darkMode ? 'bg-gray-900' : 'bg-white'
+        }`}>
           <div className="absolute w-full h-full opacity-30">
             {/* Multiple light circular glows that move slowly */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-green-100 to-green-200 blur-3xl opacity-40 animate-float-slow"></div>
-            <div className="absolute top-1/2 left-2/3 w-80 h-80 rounded-full bg-gradient-to-r from-blue-50 to-green-100 blur-3xl opacity-30 animate-float-slow-reverse"></div>
-            <div className="absolute -bottom-20 left-1/3 w-96 h-96 rounded-full bg-gradient-to-r from-green-50 to-blue-100 blur-3xl opacity-40 animate-float-medium"></div>
-            <div className="absolute top-1/3 -right-20 w-80 h-80 rounded-full bg-gradient-to-r from-blue-100 to-green-50 blur-3xl opacity-30 animate-float-medium-reverse"></div>
+            <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-40 animate-float-slow ${
+              darkMode ? 'bg-gradient-to-r from-purple-900 to-blue-900' : 'bg-gradient-to-r from-green-100 to-green-200'
+            }`}></div>
+            <div className={`absolute top-1/2 left-2/3 w-80 h-80 rounded-full blur-3xl opacity-30 animate-float-slow-reverse ${
+              darkMode ? 'bg-gradient-to-r from-blue-900 to-purple-900' : 'bg-gradient-to-r from-blue-50 to-green-100'
+            }`}></div>
+            <div className={`absolute -bottom-20 left-1/3 w-96 h-96 rounded-full blur-3xl opacity-40 animate-float-medium ${
+              darkMode ? 'bg-gradient-to-r from-purple-800 to-blue-800' : 'bg-gradient-to-r from-green-50 to-blue-100'
+            }`}></div>
+            <div className={`absolute top-1/3 -right-20 w-80 h-80 rounded-full blur-3xl opacity-30 animate-float-medium-reverse ${
+              darkMode ? 'bg-gradient-to-r from-blue-800 to-purple-800' : 'bg-gradient-to-r from-blue-100 to-green-50'
+            }`}></div>
           </div>
         </div>
         
@@ -77,15 +88,23 @@ const Hero = () => {
             <div className={`w-full md:w-[35%] pr-0 md:pr-6 z-10 transform transition-all duration-1000 ${isInView ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`}>
               {/* Text with circular glowing effect - reduced size */}
               <div className="relative mb-5">
-                <div className="absolute -inset-4 bg-gradient-to-r from-green-100 via-green-200 to-white rounded-full blur-2xl opacity-50 animate-glow-pulse"></div>
-                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-[-0.02em] relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-[#014825] via-[#1e9937] to-[#2be346] animate-circular-text">
+                <div className={`absolute -inset-4 rounded-full blur-2xl opacity-50 animate-glow-pulse ${
+                  darkMode ? 'bg-gradient-to-r from-purple-800 via-blue-800 to-gray-900' : 'bg-gradient-to-r from-green-100 via-green-200 to-white'
+                }`}></div>
+                <h1 className={`font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-[-0.02em] relative z-10 ${
+                  darkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-green-400' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#014825] via-[#1e9937] to-[#2be346]'
+                } animate-circular-text`}>
                   {translations[language].title}
                 </h1>
               </div>
               
               <div className="my-4 md:my-5 mb-6 relative">
-                <div className="absolute -inset-2 bg-gradient-to-r from-white via-green-50 to-white rounded-3xl blur-xl opacity-60 animate-glow-pulse-slow"></div>
-                <p className="text-base sm:text-lg md:text-xl text-gray-800 font-serif relative z-10">
+                <div className={`absolute -inset-2 rounded-3xl blur-xl opacity-60 animate-glow-pulse-slow ${
+                  darkMode ? 'bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800' : 'bg-gradient-to-r from-white via-green-50 to-white'
+                }`}></div>
+                <p className={`text-base sm:text-lg md:text-xl font-serif relative z-10 ${
+                  darkMode ? 'text-gray-200' : 'text-gray-800'
+                }`}>
                   {translations[language].subtitle}
                 </p>
               </div>
@@ -111,13 +130,19 @@ const Hero = () => {
                 {/* Book a Demo Button with improved animation */}
                 <a
                   href="/form" 
-                  className="group relative inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-bold uppercase tracking-wider text-sm px-5 py-3 rounded-lg overflow-hidden"
+                  className={`group relative inline-flex items-center justify-center gap-2 ${
+                    darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
+                  } font-bold uppercase tracking-wider text-sm px-5 py-3 rounded-lg overflow-hidden`}
                 >
                   {/* Button glow effect */}
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-green-100 via-blue-50 to-green-100 opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-shimmer"></div>
+                  <div className={`absolute inset-0 w-full h-full opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-shimmer ${
+                    darkMode ? 'bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900' : 'bg-gradient-to-r from-green-100 via-blue-50 to-green-100'
+                  }`}></div>
                   
                   {/* Button pulse effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-green-200 to-blue-100 rounded-lg blur opacity-0 group-hover:opacity-30 transition-opacity duration-500 group-hover:animate-pulse-fast"></div>
+                  <div className={`absolute -inset-1 rounded-lg blur opacity-0 group-hover:opacity-30 transition-opacity duration-500 group-hover:animate-pulse-fast ${
+                    darkMode ? 'bg-gradient-to-r from-purple-700 to-blue-700' : 'bg-gradient-to-r from-green-200 to-blue-100'
+                  }`}></div>
                   
                   <span className="relative flex items-center gap-2 z-10">
                     <Calendar size={16} className="inline-block transition-transform group-hover:scale-110 duration-300" strokeWidth={2.5} />
@@ -143,10 +168,14 @@ const Hero = () => {
                 </video>
                 
                 {/* Enhanced glow around video */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-green-200/20 via-white/5 to-green-200/20 blur-md opacity-50 pointer-events-none animate-glow-pulse-slow"></div>
+                <div className={`absolute -inset-2 blur-md opacity-50 pointer-events-none animate-glow-pulse-slow ${
+                  darkMode ? 'bg-gradient-to-r from-purple-900/20 via-gray-900/5 to-blue-900/20' : 'bg-gradient-to-r from-green-200/20 via-white/5 to-green-200/20'
+                }`}></div>
                 
                 {/* Subtle gradient overlay for integration */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 pointer-events-none"></div>
+                <div className={`absolute inset-0 pointer-events-none ${
+                  darkMode ? 'bg-gradient-to-r from-gray-900/10 via-transparent to-gray-900/10' : 'bg-gradient-to-r from-white/10 via-transparent to-white/10'
+                }`}></div>
               </div>
             </div>
           </div>
@@ -154,23 +183,37 @@ const Hero = () => {
       </section>
 
       {/* Curved base with center play button */}
-      <div className="relative bg-white">
-        <div className="h-8 md:h-[50px] bg-white"></div>
+      <div className={`relative ${
+        darkMode ? 'bg-gray-900' : 'bg-white'
+      }`}>
+        <div className={`h-8 md:h-[50px] ${
+          darkMode ? 'bg-gray-900' : 'bg-white'
+        }`}></div>
 
         <div className="mb-6 md:mb-9 absolute inset-x-0 -bottom-12 md:-bottom-[60px] flex items-center justify-center">
           {/* Left decorative line with animation */}
           <div className="flex-1 relative">
-            <div className="h-[2px] md:h-[3px] bg-gradient-to-r from-transparent via-[#007C91] to-[#007C91] mx-4 md:mx-6 animate-pulse" style={{ animationDuration: '3s' }}></div>
-            <div className="absolute -top-[4px] left-0 w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#007C91] animate-ping" style={{ animationDuration: '4s', animationIterationCount: 'infinite' }}></div>
+            <div className={`h-[2px] md:h-[3px] mx-4 md:mx-6 animate-pulse ${
+              darkMode ? 'bg-gradient-to-r from-transparent via-purple-600 to-purple-600' : 'bg-gradient-to-r from-transparent via-[#007C91] to-[#007C91]'
+            }`} style={{ animationDuration: '3s' }}></div>
+            <div className={`absolute -top-[4px] left-0 w-2 h-2 md:w-3 md:h-3 rounded-full animate-ping ${
+              darkMode ? 'bg-purple-600' : 'bg-[#007C91]'
+            }`} style={{ animationDuration: '4s', animationIterationCount: 'infinite' }}></div>
           </div>
           
           {/* Enhanced Rotating Circle with glow effect */}
-          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-[160px] md:h-[160px] bg-gradient-to-br from-[#014825] to-[#037c35] rounded-full flex items-center justify-center z-20 relative overflow-hidden hover:scale-105 transition-transform duration-300 group cursor-pointer">
+          <div className={`w-24 h-24 sm:w-28 sm:h-28 md:w-[160px] md:h-[160px] rounded-full flex items-center justify-center z-20 relative overflow-hidden hover:scale-105 transition-transform duration-300 group cursor-pointer ${
+            darkMode ? 'bg-gradient-to-br from-purple-800 to-blue-800' : 'bg-gradient-to-br from-[#014825] to-[#037c35]'
+          }`}>
             {/* Circular gradient glow */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-green-300 via-green-200 to-green-300 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-spin-slow"></div>
+            <div className={`absolute -inset-2 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-spin-slow ${
+              darkMode ? 'bg-gradient-to-r from-purple-500 via-blue-400 to-purple-500' : 'bg-gradient-to-r from-green-300 via-green-200 to-green-300'
+            }`}></div>
             
             {/* Inner circular glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-green-400/10 to-green-500/20 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-spin-reverse-slow"></div>
+            <div className={`absolute inset-0 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-spin-reverse-slow ${
+              darkMode ? 'bg-gradient-to-r from-purple-600/20 via-blue-500/10 to-purple-600/20' : 'bg-gradient-to-r from-green-500/20 via-green-400/10 to-green-500/20'
+            }`}></div>
             
             {/* Rotating logo */}
             <div style={{ transform: `rotate(${rotation}deg)` }} className="absolute inset-0 flex items-center justify-center transition-transform duration-100 ease-linear">
@@ -189,14 +232,19 @@ const Hero = () => {
           
           {/* Right decorative line with animation */}
           <div className="flex-1 relative">
-            <div className="h-[2px] md:h-[3px] bg-gradient-to-l from-transparent via-[#007C91] to-[#007C91] mx-4 md:mx-6 animate-pulse" style={{ animationDuration: '3s' }}></div>
-            <div className="absolute -top-[4px] right-0 w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#007C91] animate-ping" style={{ animationDuration: '4s', animationIterationCount: 'infinite' }}></div>
+            <div className={`h-[2px] md:h-[3px] mx-4 md:mx-6 animate-pulse ${
+              darkMode ? 'bg-gradient-to-l from-transparent via-purple-600 to-purple-600' : 'bg-gradient-to-l from-transparent via-[#007C91] to-[#007C91]'
+            }`} style={{ animationDuration: '3s' }}></div>
+            <div className={`absolute -top-[4px] right-0 w-2 h-2 md:w-3 md:h-3 rounded-full animate-ping ${
+              darkMode ? 'bg-purple-600' : 'bg-[#007C91]'
+            }`} style={{ animationDuration: '4s', animationIterationCount: 'infinite' }}></div>
           </div>
         </div>
       </div>
 
-      {/* Additional CSS for animations - Add this to your global CSS or component */}
+      {/* Animation styles remain the same */}
       <style jsx>{`
+       
         @keyframes circular-text {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -305,6 +353,7 @@ const Hero = () => {
         .animate-spin-reverse-slow {
           animation: spin-reverse-slow 20s linear infinite;
         }
+      
       `}</style>
     </>
   );

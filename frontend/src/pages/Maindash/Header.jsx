@@ -7,13 +7,16 @@ import { MdOutlineSpaceDashboard } from 'react-icons/md';
 import logo from '../../assets/logoPraktikly.png';
 import { useLanguage } from '../../Context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../../Context/ThemeContext';
+import Contact from '../Contact';
 
 const Header = () => {
   const [showProducts, setShowProducts] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { language, changeLanguage, toggleLanguage } = useLanguage();
+  const { darkMode, toggleDarkMode } = useTheme();
 
   // Add scroll effect
   useEffect(() => {
@@ -50,10 +53,6 @@ const Header = () => {
     }
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${

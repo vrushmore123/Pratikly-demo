@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,  useNavigate } from "react-router-dom";
 import { LanguageProvider } from "./Context/LanguageContext";
 
 // Landing Page Components
@@ -10,6 +10,7 @@ import Experience from "./pages/Maindash/Experience";
 import UseCases from "./pages/Maindash/UseCases";
 import ForStudents from "./pages/Maindash/ForStudents";
 import ForAudiences from "./pages/Maindash/ForAudiences";
+import InternshipTypes from "./pages/Maindash/InternshipTypes";
 
 import Matters from "./pages/Maindash/Matters";
 import Footer from "./pages/Maindash/Footer";
@@ -57,7 +58,7 @@ import TeacherCalender from "./components/Teacher/Calender";
 import StudentCourses from "./components/Teacher/Student";
 import NotificationPreferences from "./components/Teacher/Communication/Notifications";
 import ManageGroups from "./components/Teacher/groups/ManageGroups";
-
+import ContactPage from "./pages/Contact";
 import { ThemeProvider } from "./Context/ThemeContext";
 
 // Layout components
@@ -66,6 +67,33 @@ const Layout = ({ children }) => (
     {children}
   </div>
 );
+
+function FloatingButton() {
+  const navigate = useNavigate();
+
+  return (
+    <button
+      onClick={() => navigate('/form')}
+      className="fixed bottom-8 right-8 flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 z-50 group"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-6 w-6 group-hover:animate-bounce" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" 
+        />
+      </svg>
+      <span className="font-semibold">Book a Demo</span>
+    </button>
+  );
+}
 
 // Landing Page Wrapper
 const LandingPage = () => (
@@ -78,9 +106,11 @@ const LandingPage = () => (
       <ForStudents />
       <ForAudiences/>
      <Matters />
+     <InternshipTypes />
      
     </main>
     <Footer />
+     <FloatingButton />
   </Layout>
 );
 
@@ -111,6 +141,17 @@ const TeacherLayout = ({ children }) => (
   </Layout>
 );
 
+const ContactPageWrapper = () => (
+  <Layout>
+    <Header />
+    <main>
+      <ContactPage />
+    </main>
+    <Footer />
+    <FloatingButton />
+  </Layout>
+);
+
 export default function App() {
   return (
     <ThemeProvider>
@@ -123,6 +164,7 @@ export default function App() {
           <Route path="/form" element={<Forms />} />
           <Route path="/Liahub" element={<LiaHub />} />
           <Route path="/Lms" element={<LMS />} />
+           <Route path="/contact" element={<ContactPageWrapper />} />
 
           {/* Employer Routes */}
           <Route path="/employer" element={<EmployerLayout />}>

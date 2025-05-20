@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Book, MessageCircle, Users, Clock, Settings, Shield, Search, FileText } from 'lucide-react';
-
-// Note: For demo purposes, we'll mock the useLanguage hook
-const useLanguage = () => {
-  return { language: 'en' };
-};
+import { useLanguage } from '../../Context/LanguageContext';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ForAudiences = () => {
   const { language } = useLanguage();
+  const { darkMode } = useTheme();
   const [activeAudience, setActiveAudience] = useState(0);
   const [activeFeaturesMap, setActiveFeaturesMap] = useState({0: 0, 1: 0, 2: 0});
   const [isHovering, setIsHovering] = useState(false);
@@ -158,7 +156,6 @@ const ForAudiences = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isHovering) {
-        // Cycle through features when not hovering
         setActiveFeaturesMap(prev => {
           const newMap = {...prev};
           newMap[activeAudience] = (newMap[activeAudience] + 1) % currentContent.audiences[activeAudience].features.length;
@@ -171,26 +168,68 @@ const ForAudiences = () => {
   }, [activeAudience, isHovering, currentContent.audiences]);
 
   const audienceColors = [
-    { primary: 'bg-emerald-500', lighter: 'bg-emerald-400', text: 'text-emerald-500', hover: 'hover:bg-emerald-500', border: 'border-emerald-500' },
-    { primary: 'bg-blue-500', lighter: 'bg-blue-400', text: 'text-blue-500', hover: 'hover:bg-blue-500', border: 'border-blue-500' },
-    { primary: 'bg-purple-500', lighter: 'bg-purple-400', text: 'text-purple-500', hover: 'hover:bg-purple-500', border: 'border-purple-500' }
+    { 
+      primary: 'bg-emerald-500', 
+      lighter: 'bg-emerald-400', 
+      text: 'text-emerald-500', 
+      hover: 'hover:bg-emerald-500', 
+      border: 'border-emerald-500',
+      dark: {
+        primary: 'bg-emerald-600',
+        lighter: 'bg-emerald-500',
+        text: 'text-emerald-400',
+        hover: 'hover:bg-emerald-600',
+        border: 'border-emerald-400'
+      }
+    },
+    { 
+      primary: 'bg-blue-500', 
+      lighter: 'bg-blue-400', 
+      text: 'text-blue-500', 
+      hover: 'hover:bg-blue-500', 
+      border: 'border-blue-500',
+      dark: {
+        primary: 'bg-blue-600',
+        lighter: 'bg-blue-500',
+        text: 'text-blue-400',
+        hover: 'hover:bg-blue-600',
+        border: 'border-blue-400'
+      }
+    },
+    { 
+      primary: 'bg-purple-500', 
+      lighter: 'bg-purple-400', 
+      text: 'text-purple-500', 
+      hover: 'hover:bg-purple-500', 
+      border: 'border-purple-500',
+      dark: {
+        primary: 'bg-purple-600',
+        lighter: 'bg-purple-500',
+        text: 'text-purple-400',
+        hover: 'hover:bg-purple-600',
+        border: 'border-purple-400'
+      }
+    }
   ];
 
+  const getColor = (colorKey, index) => {
+    return darkMode ? audienceColors[index].dark[colorKey] : audienceColors[index][colorKey];
+  };
+
   return (
-    <section className="px-4 py-20 overflow-visible bg-gray-50">
+    <section className={`px-4 py-20 overflow-visible ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="max-w-7xl mx-auto">
-        {/* Heading with improved visibility */}
-{/* Heading with consistent color */}
-<div className="text-center mb-16">
-  <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-emerald-600">
-    <span>{currentContent.heading}</span>{" "}
-    <span>{currentContent.headingHighlight}</span>
-  </h2>
-</div>
+        {/* Heading */}
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
+            <span>{currentContent.heading}</span>{" "}
+            <span>{currentContent.headingHighlight}</span>
+          </h2>
+        </div>
         
         {/* Interactive Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Audience Selector - Made more clear with outline even for non-active items */}
+          {/* Audience Selector */}
           <div className="lg:col-span-4 flex flex-col space-y-4">
             {currentContent.audiences.map((audience, index) => (
               <div 
@@ -200,32 +239,46 @@ const ForAudiences = () => {
                 onMouseLeave={() => setIsHovering(false)}
                 className={`cursor-pointer transition-all duration-300 rounded-2xl p-6 border-2 ${
                   activeAudience === index 
-                    ? `${audienceColors[index].primary} text-white shadow-lg border-transparent` 
-                    : `bg-white hover:shadow-md border-gray-200 hover:border-${audienceColors[index].text.split('-')[1]}-300`
+                    ? `${getColor('primary', index)} text-white shadow-lg border-transparent` 
+                    : `${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white'} ${
+                        darkMode ? 'border-gray-700 hover:border-emerald-400' : 'border-gray-200 hover:border-emerald-300'
+                      } hover:shadow-md`
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <h3 className={`text-xl md:text-2xl font-bold`}>
+                  <h3 className={`text-xl md:text-2xl font-bold ${
+                    activeAudience === index ? 'text-white' : darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
                     {audience.title}
                   </h3>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    activeAudience === index ? 'bg-white text-gray-800' : audienceColors[index].lighter + ' text-white'
+                    activeAudience === index 
+                      ? 'bg-white text-gray-800' 
+                      : `${getColor('lighter', index)} text-white`
                   }`}>
                     {index + 1}
                   </div>
                 </div>
-                <p className={`mt-2 ${activeAudience === index ? 'text-white/90' : 'text-gray-600'}`}>
+                <p className={`mt-2 ${
+                  activeAudience === index 
+                    ? 'text-white/90' 
+                    : darkMode ? 'text-gray-300' : 'text-gray-600'
+                }`}>
                   {audience.description}
                 </p>
                 
                 {/* Preview of features even when not selected */}
                 {activeAudience !== index && (
-                  <div className="mt-3 pt-3 border-t border-gray-100">
-                    <div className="flex items-center text-sm text-gray-500">
+                  <div className={`mt-3 pt-3 ${
+                    darkMode ? 'border-gray-700' : 'border-gray-100'
+                  } border-t`}>
+                    <div className={`flex items-center text-sm ${
+                      darkMode ? 'text-gray-400' : 'text-gray-500'
+                    }`}>
                       <span className="mr-2">{audience.features[0].title}</span>
-                      <span className="text-gray-300 mx-1">•</span>
+                      <span className={`mx-1 ${darkMode ? 'text-gray-600' : 'text-gray-300'}`}>•</span>
                       <span className="mr-2">{audience.features[1].title}</span>
-                      <span className="text-gray-300 mx-1">•</span>
+                      <span className={`mx-1 ${darkMode ? 'text-gray-600' : 'text-gray-300'}`}>•</span>
                       <span>{audience.features[2].title}</span>
                     </div>
                   </div>
@@ -234,36 +287,50 @@ const ForAudiences = () => {
             ))}
           </div>
 
-          {/* Feature Showcase - Improved visibility */}
-          <div className="lg:col-span-8 bg-white rounded-3xl overflow-hidden shadow-xl relative">
+          {/* Feature Showcase */}
+          <div className={`lg:col-span-8 ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          } rounded-3xl overflow-hidden shadow-xl relative`}>
             {/* Background decorative elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-b from-gray-100 to-transparent rounded-full transform translate-x-1/3 -translate-y-1/3 opacity-60"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-t from-gray-100 to-transparent rounded-full transform -translate-x-1/3 translate-y-1/3 opacity-60"></div>
+            <div className={`absolute top-0 right-0 w-64 h-64 rounded-full transform translate-x-1/3 -translate-y-1/3 opacity-60 ${
+              darkMode ? 'bg-gradient-to-b from-gray-700 to-transparent' : 'bg-gradient-to-b from-gray-100 to-transparent'
+            }`}></div>
+            <div className={`absolute bottom-0 left-0 w-48 h-48 rounded-full transform -translate-x-1/3 translate-y-1/3 opacity-60 ${
+              darkMode ? 'bg-gradient-to-t from-gray-700 to-transparent' : 'bg-gradient-to-t from-gray-100 to-transparent'
+            }`}></div>
             
             <div className="p-8 md:p-12 relative z-10 h-full flex flex-col">
               {/* Current Feature Content */}
               <div className="flex-grow">
                 <div className="mb-8 flex items-center">
-                  <div className={`p-4 rounded-2xl ${audienceColors[activeAudience].primary} mr-6`}>
+                  <div className={`p-4 rounded-2xl ${getColor('primary', activeAudience)} mr-6`}>
                     {React.cloneElement(
                       currentContent.audiences[activeAudience].features[activeFeaturesMap[activeAudience]].icon, 
                       { size: 32, className: 'text-white' }
                     )}
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+                  <h3 className={`text-2xl md:text-3xl font-bold ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
                     {currentContent.audiences[activeAudience].features[activeFeaturesMap[activeAudience]].title}
                   </h3>
                 </div>
                 
-                <div className="bg-gray-50 p-6 rounded-2xl mb-8">
-                  <p className="text-gray-700 text-lg leading-relaxed">
+                <div className={`p-6 rounded-2xl mb-8 ${
+                  darkMode ? 'bg-gray-700' : 'bg-gray-50'
+                }`}>
+                  <p className={`leading-relaxed ${
+                    darkMode ? 'text-gray-300' : 'text-gray-700'
+                  } text-lg`}>
                     {currentContent.audiences[activeAudience].features[activeFeaturesMap[activeAudience]].description}
                   </p>
                 </div>
                 
                 {/* Other features preview */}
                 <div className="mt-6">
-                  <h4 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Other features:</h4>
+                  <h4 className={`text-sm uppercase tracking-wider mb-3 ${
+                    darkMode ? 'text-gray-400' : 'text-gray-500'
+                  }`}>Other features:</h4>
                   <div className="flex flex-wrap gap-3">
                     {currentContent.audiences[activeAudience].features.map((feature, idx) => (
                       idx !== activeFeaturesMap[activeAudience] && (
@@ -276,7 +343,11 @@ const ForAudiences = () => {
                               return newMap;
                             });
                           }}
-                          className={`px-4 py-2 rounded-lg text-sm ${audienceColors[activeAudience].text} border ${audienceColors[activeAudience].border} hover:${audienceColors[activeAudience].primary} hover:text-white transition-colors`}
+                          className={`px-4 py-2 rounded-lg text-sm ${
+                            darkMode 
+                              ? `${getColor('text', activeAudience)} border ${getColor('border', activeAudience)} hover:${getColor('primary', activeAudience)} hover:text-white`
+                              : `${getColor('text', activeAudience)} border ${getColor('border', activeAudience)} hover:${getColor('primary', activeAudience)} hover:text-white`
+                          } transition-colors`}
                         >
                           {feature.title}
                         </button>
@@ -293,8 +364,8 @@ const ForAudiences = () => {
                     key={index}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       activeFeaturesMap[activeAudience] === index 
-                        ? audienceColors[activeAudience].primary + ' transform scale-125' 
-                        : 'bg-gray-300 hover:bg-gray-400'
+                        ? `${getColor('primary', activeAudience)} transform scale-125` 
+                        : darkMode ? 'bg-gray-600 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'
                     }`}
                     onClick={() => {
                       setActiveFeaturesMap(prev => {
@@ -313,7 +384,7 @@ const ForAudiences = () => {
           </div>
         </div>
         
-        {/* Feature Pills - Improved visibility */}
+        {/* Feature Pills */}
         <div className="mt-16 flex flex-wrap justify-center gap-4">
           {currentContent.audiences.flatMap((audience, audienceIndex) => 
             audience.features.map((feature, featureIndex) => (
@@ -321,8 +392,14 @@ const ForAudiences = () => {
                 key={`${audienceIndex}-${featureIndex}`}
                 className={`py-2 px-4 rounded-full border-2 transition-all duration-300 text-sm font-medium
                   ${activeFeaturesMap[activeAudience] === featureIndex && activeAudience === audienceIndex
-                    ? audienceColors[audienceIndex].primary + ' text-white border-transparent'
-                    : 'bg-white ' + audienceColors[audienceIndex].text + ' ' + audienceColors[audienceIndex].border + ' ' + audienceColors[audienceIndex].hover + ' hover:text-white'
+                    ? `${getColor('primary', audienceIndex)} text-white border-transparent`
+                    : `${darkMode ? 'bg-gray-800' : 'bg-white'} ${
+                        getColor('text', audienceIndex)
+                      } ${
+                        getColor('border', audienceIndex)
+                      } ${
+                        getColor('hover', audienceIndex)
+                      } hover:text-white`
                   }`}
                 onClick={() => {
                   setActiveAudience(audienceIndex);

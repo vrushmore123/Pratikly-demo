@@ -31,6 +31,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useLanguage } from '../../Context/LanguageContext';
+import { useTheme } from '../../Context/ThemeContext';
 
 const Experience = () => {
   const [activeTab, setActiveTab] = useState('students');
@@ -38,6 +39,7 @@ const Experience = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [animateFeature, setAnimateFeature] = useState(-1);
   const { language } = useLanguage();
+  const { darkMode } = useTheme();
 
   // Animation effect when component mounts
   useEffect(() => {
@@ -225,98 +227,141 @@ const Experience = () => {
 
   // Enhanced color scheme with more vibrant gradients
   const getTabColors = (tabId) => {
-    switch(tabId) {
-      case 'students':
-        return {
-          active: 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white',
+    const baseColors = {
+      students: {
+        light: {
+          active: 'bg-gradient-to-r from-blue-500 to-indigo-600',
           hover: 'bg-blue-50 text-blue-600',
           icon: 'text-blue-600',
-          activeIcon: 'text-white',
           cardBg: 'bg-gradient-to-br from-blue-50 to-indigo-50',
-          cardIcon: 'text-blue-600',
           cardHighlight: 'bg-blue-100 text-blue-700',
           cardLink: 'text-blue-600 hover:text-blue-700',
           rightCard: 'bg-gradient-to-br from-blue-500 via-indigo-600 to-blue-700',
-          glow: 'shadow-blue-500/30',
-          highlight: 'bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent',
+          highlight: 'bg-gradient-to-r from-blue-400 to-indigo-500',
           accentBg: 'bg-blue-600/10',
-          accentBorder: 'border-blue-500/20',
           featureIconBg: 'bg-blue-100',
           featureIconColor: 'text-blue-600'
-        };
-      case 'teachers':
-        return {
-          active: 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white',
+        },
+        dark: {
+          active: 'bg-gradient-to-r from-blue-600 to-indigo-700',
+          hover: 'bg-blue-900/30 text-blue-300',
+          icon: 'text-blue-400',
+          cardBg: 'bg-gradient-to-br from-gray-800 to-gray-900',
+          cardHighlight: 'bg-blue-900/50 text-blue-200',
+          cardLink: 'text-blue-400 hover:text-blue-300',
+          rightCard: 'bg-gradient-to-br from-blue-600 via-indigo-700 to-blue-800',
+          highlight: 'bg-gradient-to-r from-blue-400 to-indigo-500',
+          accentBg: 'bg-blue-600/20',
+          featureIconBg: 'bg-blue-900/50',
+          featureIconColor: 'text-blue-400'
+        }
+      },
+      teachers: {
+        light: {
+          active: 'bg-gradient-to-r from-emerald-500 to-teal-600',
           hover: 'bg-emerald-50 text-emerald-600',
           icon: 'text-emerald-600',
-          activeIcon: 'text-white',
           cardBg: 'bg-gradient-to-br from-emerald-50 to-teal-50',
-          cardIcon: 'text-emerald-600',
           cardHighlight: 'bg-emerald-100 text-emerald-700',
           cardLink: 'text-emerald-600 hover:text-emerald-700',
           rightCard: 'bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700',
-          glow: 'shadow-emerald-500/30',
-          highlight: 'bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent',
+          highlight: 'bg-gradient-to-r from-emerald-400 to-teal-500',
           accentBg: 'bg-emerald-600/10',
-          accentBorder: 'border-emerald-500/20',
           featureIconBg: 'bg-emerald-100',
           featureIconColor: 'text-emerald-600'
-        };
-      case 'managers':
-        return {
-          active: 'bg-gradient-to-r from-purple-500 to-violet-600 text-white',
+        },
+        dark: {
+          active: 'bg-gradient-to-r from-emerald-600 to-teal-700',
+          hover: 'bg-emerald-900/30 text-emerald-300',
+          icon: 'text-emerald-400',
+          cardBg: 'bg-gradient-to-br from-gray-800 to-gray-900',
+          cardHighlight: 'bg-emerald-900/50 text-emerald-200',
+          cardLink: 'text-emerald-400 hover:text-emerald-300',
+          rightCard: 'bg-gradient-to-br from-emerald-600 via-teal-700 to-emerald-800',
+          highlight: 'bg-gradient-to-r from-emerald-400 to-teal-500',
+          accentBg: 'bg-emerald-600/20',
+          featureIconBg: 'bg-emerald-900/50',
+          featureIconColor: 'text-emerald-400'
+        }
+      },
+      managers: {
+        light: {
+          active: 'bg-gradient-to-r from-purple-500 to-violet-600',
           hover: 'bg-purple-50 text-purple-600',
           icon: 'text-purple-600',
-          activeIcon: 'text-white',
           cardBg: 'bg-gradient-to-br from-purple-50 to-violet-50',
-          cardIcon: 'text-purple-600',
           cardHighlight: 'bg-purple-100 text-purple-700',
           cardLink: 'text-purple-600 hover:text-purple-700',
           rightCard: 'bg-gradient-to-br from-purple-500 via-violet-600 to-purple-700',
-          glow: 'shadow-purple-500/30',
-          highlight: 'bg-gradient-to-r from-purple-400 to-violet-500 bg-clip-text text-transparent',
+          highlight: 'bg-gradient-to-r from-purple-400 to-violet-500',
           accentBg: 'bg-purple-600/10',
-          accentBorder: 'border-purple-500/20',
           featureIconBg: 'bg-purple-100',
           featureIconColor: 'text-purple-600'
-        };
-      case 'employers':
-        return {
-          active: 'bg-gradient-to-r from-amber-500 to-orange-600 text-white',
+        },
+        dark: {
+          active: 'bg-gradient-to-r from-purple-600 to-violet-700',
+          hover: 'bg-purple-900/30 text-purple-300',
+          icon: 'text-purple-400',
+          cardBg: 'bg-gradient-to-br from-gray-800 to-gray-900',
+          cardHighlight: 'bg-purple-900/50 text-purple-200',
+          cardLink: 'text-purple-400 hover:text-purple-300',
+          rightCard: 'bg-gradient-to-br from-purple-600 via-violet-700 to-purple-800',
+          highlight: 'bg-gradient-to-r from-purple-400 to-violet-500',
+          accentBg: 'bg-purple-600/20',
+          featureIconBg: 'bg-purple-900/50',
+          featureIconColor: 'text-purple-400'
+        }
+      },
+      employers: {
+        light: {
+          active: 'bg-gradient-to-r from-amber-500 to-orange-600',
           hover: 'bg-amber-50 text-amber-600',
           icon: 'text-amber-600',
-          activeIcon: 'text-white',
           cardBg: 'bg-gradient-to-br from-amber-50 to-orange-50',
-          cardIcon: 'text-amber-600',
           cardHighlight: 'bg-amber-100 text-amber-700',
           cardLink: 'text-amber-600 hover:text-amber-700',
           rightCard: 'bg-gradient-to-br from-amber-500 via-orange-600 to-amber-700',
-          glow: 'shadow-amber-500/30',
-          highlight: 'bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent',
+          highlight: 'bg-gradient-to-r from-amber-400 to-orange-500',
           accentBg: 'bg-amber-600/10',
-          accentBorder: 'border-amber-500/20',
           featureIconBg: 'bg-amber-100',
           featureIconColor: 'text-amber-600'
-        };
-      default:
-        return {
-          active: 'bg-gradient-to-r from-gray-600 to-gray-700 text-white',
-          hover: 'bg-gray-50 text-gray-600',
-          icon: 'text-gray-600',
-          activeIcon: 'text-white',
-          cardBg: 'bg-gradient-to-br from-gray-50 to-gray-100',
-          cardIcon: 'text-gray-600',
-          cardHighlight: 'bg-gray-100 text-gray-700',
-          cardLink: 'text-gray-600 hover:text-gray-700',
-          rightCard: 'bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800',
-          glow: 'shadow-gray-500/30',
-          highlight: 'bg-gradient-to-r from-gray-600 to-gray-700 bg-clip-text text-transparent',
-          accentBg: 'bg-gray-600/10',
-          accentBorder: 'border-gray-500/20',
-          featureIconBg: 'bg-gray-100',
-          featureIconColor: 'text-gray-600'
-        };
-    }
+        },
+        dark: {
+          active: 'bg-gradient-to-r from-amber-600 to-orange-700',
+          hover: 'bg-amber-900/30 text-amber-300',
+          icon: 'text-amber-400',
+          cardBg: 'bg-gradient-to-br from-gray-800 to-gray-900',
+          cardHighlight: 'bg-amber-900/50 text-amber-200',
+          cardLink: 'text-amber-400 hover:text-amber-300',
+          rightCard: 'bg-gradient-to-br from-amber-600 via-orange-700 to-amber-800',
+          highlight: 'bg-gradient-to-r from-amber-400 to-orange-500',
+          accentBg: 'bg-amber-600/20',
+          featureIconBg: 'bg-amber-900/50',
+          featureIconColor: 'text-amber-400'
+        }
+      }
+    };
+
+    const mode = darkMode ? 'dark' : 'light';
+    const colors = baseColors[tabId] || baseColors.students;
+    
+    return {
+      active: `${colors[mode].active} text-white`,
+      hover: colors[mode].hover,
+      icon: colors[mode].icon,
+      activeIcon: 'text-white',
+      cardBg: colors[mode].cardBg,
+      cardIcon: colors[mode].icon,
+      cardHighlight: colors[mode].cardHighlight,
+      cardLink: colors[mode].cardLink,
+      rightCard: colors[mode].rightCard,
+      glow: darkMode ? 'shadow-lg' : `shadow-${tabId === 'students' ? 'blue' : tabId === 'teachers' ? 'emerald' : tabId === 'managers' ? 'purple' : 'amber'}-500/30`,
+      highlight: `${colors[mode].highlight} bg-clip-text text-transparent`,
+      accentBg: colors[mode].accentBg,
+      accentBorder: darkMode ? 'border-white/10' : `border-${tabId === 'students' ? 'blue' : tabId === 'teachers' ? 'emerald' : tabId === 'managers' ? 'purple' : 'amber'}-500/20`,
+      featureIconBg: colors[mode].featureIconBg,
+      featureIconColor: colors[mode].featureIconColor
+    };
   };
 
   const tabColors = getTabColors(activeTab);
@@ -341,7 +386,11 @@ const Experience = () => {
   };
 
   return (
-    <section className="px-4 py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <section className={`px-4 py-24 overflow-hidden ${
+      darkMode 
+        ? 'bg-gradient-to-b from-gray-900 to-gray-800' 
+        : 'bg-gradient-to-b from-white to-gray-50'
+    }`}>
       <div 
         className={`max-w-7xl mx-auto transition-all duration-1000 transform ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -354,17 +403,25 @@ const Experience = () => {
                 Next-generation platform
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 leading-tight ${
+              darkMode ? 'text-white' : 'text-gray-900'
+            }`}>
               {translations[language].title} <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 bg-clip-text text-transparent">{translations[language].titleHighlight}</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className={`text-xl max-w-3xl mx-auto ${
+              darkMode ? 'text-gray-300' : 'text-gray-600'
+            }`}>
               {translations[language].subtitle}
             </p>
           </div>
 
           <div className="flex flex-col gap-10">
             <div className="flex flex-wrap justify-center gap-3 mb-6 relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-purple-50 to-amber-50 rounded-3xl blur-3xl opacity-50 -z-10"></div>
+              <div className={`absolute inset-0 rounded-3xl blur-3xl opacity-50 -z-10 ${
+                darkMode 
+                  ? 'bg-gradient-to-r from-blue-900/20 via-purple-900/20 to-amber-900/20' 
+                  : 'bg-gradient-to-r from-blue-50 via-purple-50 to-amber-50'
+              }`}></div>
               {translations[language].tabs.map((tab) => {
                 const colors = getTabColors(tab.id);
                 return (
@@ -378,6 +435,8 @@ const Experience = () => {
                         ? `${colors.active} shadow-lg ${colors.glow} scale-105`
                         : hoveredTab === tab.id
                         ? `${colors.hover} shadow-md scale-102.5`
+                        : darkMode
+                        ? 'bg-gray-800 text-gray-200 hover:bg-gray-700 shadow-md border border-gray-700'
                         : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm border border-gray-200'
                     }`}
                   >
@@ -392,7 +451,11 @@ const Experience = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div 
-                className={`bg-white backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 ${tabColors.accentBorder} relative overflow-hidden group`}
+                className={`backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 ${tabColors.accentBorder} relative overflow-hidden group ${
+                  darkMode 
+                    ? 'bg-gray-800/70 border-gray-700' 
+                    : 'bg-white border border-gray-200'
+                }`}
               >
                 {/* Decorative elements */}
                 <div className={`absolute top-0 right-0 w-32 h-32 -mt-12 -mr-12 rounded-full opacity-10 blur-2xl ${tabColors.active}`}></div>
@@ -403,10 +466,14 @@ const Experience = () => {
                     {getTabIcon(activeTabData.id)}
                   </div>
                   <div className="transition-all duration-300">
-                    <h3 className="text-2xl font-bold text-gray-900">
+                    <h3 className={`text-2xl font-bold ${
+                      darkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
                       {activeTabData.title}
                     </h3>
-                    <p className="text-gray-600 mt-2">{activeTabData.description}</p>
+                    <p className={`mt-2 ${
+                      darkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}>{activeTabData.description}</p>
                   </div>
                 </div>
 
@@ -423,12 +490,14 @@ const Experience = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">{feature}</span>
+                      <span className={darkMode ? 'text-gray-200' : 'text-gray-700'}>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
+                <div className={`flex items-center justify-between mt-8 pt-6 ${
+                  darkMode ? 'border-t border-gray-700' : 'border-t border-gray-100'
+                }`}>
                   <span className={`text-sm font-medium px-4 py-1.5 rounded-full ${tabColors.cardHighlight}`}>
                     {activeTabData.stats}
                   </span>
