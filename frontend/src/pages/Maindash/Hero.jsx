@@ -60,7 +60,7 @@ const Hero = () => {
     <>
       <section ref={heroRef} className={`relative overflow-hidden pt-16 md:pt-[100px] pb-20 md:pb-[120px] px-6 sm:px-6 ${
         darkMode ? 'bg-gray-900' : 'bg-white'
-      }`}>
+      } font-["Helvetica_Neue",sans-serif]`}>
         {/* Animated Background with subtle circular glowing effect */}
         <div className={`absolute inset-0 overflow-hidden ${
           darkMode ? 'bg-gray-900' : 'bg-white'
@@ -91,7 +91,7 @@ const Hero = () => {
                 <div className={`absolute -inset-4 rounded-full blur-2xl opacity-50 animate-glow-pulse ${
                   darkMode ? 'bg-gradient-to-r from-purple-800 via-blue-800 to-gray-900' : 'bg-gradient-to-r from-green-100 via-green-200 to-white'
                 }`}></div>
-                <h1 className={`font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-[-0.02em] relative z-10 ${
+                <h1 className={`font-["Helvetica_Neue",sans-serif] text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-[-0.02em] relative z-10 ${
                   darkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-green-400' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#014825] via-[#1e9937] to-[#2be346]'
                 } animate-circular-text`}>
                   {translations[language].title}

@@ -576,9 +576,9 @@ const Matters = () => {
                     isVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-20 rotate-2'
                   } shadow-feature-card hover:shadow-feature-glow ${
                     darkMode 
-                      ? 'bg-gray-800/90 border-gray-700/70' 
-                      : 'bg-white border-gray-100'
-                  } border hover:border-blue-400/30`}
+                      ? 'bg-gray-800/90 border-gray-700/70 hover:bg-gray-800' 
+                      : 'bg-white border-gray-100 hover:bg-gray-50'
+                  } border hover:border-blue-400/30 hover:-translate-y-1`}
                   style={{ 
                     transitionDelay: `${delay}ms`,
                     transformOrigin: index % 2 === 0 ? 'bottom left' : 'bottom right'
@@ -586,37 +586,31 @@ const Matters = () => {
                   onMouseMove={e => !isMobile && handleMouseMove(e, e.currentTarget)}
                   onMouseLeave={e => !isMobile && handleMouseLeave(e.currentTarget)}
                 >
-                  <div className="p-5 sm:p-6 h-full flex flex-col">
-                    <div className={`w-12 h-12 rounded-lg ${
+                  <div className="p-6 sm:p-7 h-full flex flex-col">
+                    <div className={`w-14 h-14 rounded-xl ${
                       darkMode 
                         ? 'bg-blue-900/30 text-blue-400' 
                         : 'bg-blue-50 text-blue-600'
-                    } flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                    } flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                       {React.cloneElement(feature.icon, {
-                        className: "w-6 h-6"
+                        className: "w-7 h-7"
                       })}
                     </div>
                     
-                    <h3 className={`text-lg sm:text-xl font-bold mb-2 ${
+                    <h3 className={`text-lg sm:text-xl font-bold mb-3 ${
                       darkMode ? 'text-gray-200' : 'text-gray-900'
-                    }`}>
+                    } group-hover:text-blue-500 transition-colors duration-300`}>
                       {feature.title}
                     </h3>
                     
                     <p className={`text-sm sm:text-base ${
                       darkMode ? 'text-gray-400' : 'text-gray-600'
-                    }`}>
+                    } leading-relaxed`}>
                       {feature.description}
                     </p>
-                    
-                    <div className="mt-auto pt-4">
-                      <span className={`inline-flex items-center text-sm font-medium ${
-                        darkMode ? 'text-blue-400' : 'text-blue-600'
-                      } group-hover:underline`}>
-                        <span>Learn more</span>
-                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
+
+                    {/* Add subtle gradient line at the bottom */}
+                    <div className="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 rounded-full opacity-50"></div>
                   </div>
                 </div>
               );

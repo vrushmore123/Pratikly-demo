@@ -149,7 +149,7 @@ export default function ContactPage() {
     : "bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-700 hover:to-purple-800 text-white shadow-indigo-500/20 hover:shadow-indigo-500/40";
 
   return (
-    <div className={`w-full ${containerStyles} px-4 sm:px-6 lg:px-8 py-16 min-h-screen`}>
+    <div className={`w-full ${containerStyles} px-4 sm:px-6 lg:px-8 py-16 min-h-screen font-["Helvetica_Neue",sans-serif]`}>
       {/* Floating background elements - theme sensitive */}
       <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div 

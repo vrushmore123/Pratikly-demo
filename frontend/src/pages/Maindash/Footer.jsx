@@ -104,8 +104,7 @@ const Footer = () => {
   return (
     <footer 
       className={`${darkMode ? 'bg-gray-900 text-gray-200' : 'bg-gray-50 text-black'} 
-      transition-colors duration-300 font-serif`} // Times Roman font family applied here
-      style={{ fontFamily: "'Times New Roman', Times, serif" }}
+      transition-colors duration-300 font-["Helvetica_Neue",sans-serif]`}
     >
       <div className="max-w-7xl mx-auto px-6 py-16">
         <motion.div 

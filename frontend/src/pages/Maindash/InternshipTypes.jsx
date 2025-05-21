@@ -609,7 +609,7 @@ const FooterNote = () => {
 
   return (
     <section
-      className={`py-20 px-4 transition-colors duration-500 ${
+      className={`py-20 px-4 transition-colors duration-500 font-["Helvetica_Neue",sans-serif] ${
         darkMode 
           ? "bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950" 
           : "bg-gradient-to-b from-blue-50 via-white to-blue-50"
