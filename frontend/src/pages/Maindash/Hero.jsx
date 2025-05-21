@@ -191,9 +191,9 @@ const Hero = () => {
         }`}></div>
 
         <div className="mb-6 md:mb-9 absolute inset-x-0 -bottom-12 md:-bottom-[60px] flex items-center justify-center">
-          {/* Left decorative line with animation */}
-          <div className="flex-1 relative">
-            <div className={`h-[2px] md:h-[3px] mx-4 md:mx-6 animate-pulse ${
+          {/* Left decorative line with animation - medium length */}
+          <div className="w-28 sm:w-36 md:w-48 lg:w-64 relative">
+            <div className={`h-[2px] md:h-[3px] mx-3 animate-pulse ${
               darkMode ? 'bg-gradient-to-r from-transparent via-purple-600 to-purple-600' : 'bg-gradient-to-r from-transparent via-[#007C91] to-[#007C91]'
             }`} style={{ animationDuration: '3s' }}></div>
             <div className={`absolute -top-[4px] left-0 w-2 h-2 md:w-3 md:h-3 rounded-full animate-ping ${
@@ -230,9 +230,9 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Right decorative line with animation */}
-          <div className="flex-1 relative">
-            <div className={`h-[2px] md:h-[3px] mx-4 md:mx-6 animate-pulse ${
+          {/* Right decorative line with animation - medium length */}
+          <div className="w-28 sm:w-36 md:w-48 lg:w-64 relative">
+            <div className={`h-[2px] md:h-[3px] mx-3 animate-pulse ${
               darkMode ? 'bg-gradient-to-l from-transparent via-purple-600 to-purple-600' : 'bg-gradient-to-l from-transparent via-[#007C91] to-[#007C91]'
             }`} style={{ animationDuration: '3s' }}></div>
             <div className={`absolute -top-[4px] right-0 w-2 h-2 md:w-3 md:h-3 rounded-full animate-ping ${

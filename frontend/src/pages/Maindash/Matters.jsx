@@ -11,12 +11,13 @@ import {
   Cpu,
   ArrowRight,
   CheckCircle,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 
 const Matters = () => {
   const { language } = useLanguage();
-  const { darkMode } = useTheme(); // Get dark mode state
+  const { darkMode } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -24,11 +25,13 @@ const Matters = () => {
   
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('why');
-  const [hoveredEntity, setHoveredEntity] = useState(null);
   const [activeEntity, setActiveEntity] = useState(null);
+  const [hoveredEntity, setHoveredEntity] = useState(null);
   const ecosystemRef = useRef(null);
   const centerNodeRef = useRef(null);
   const svgRef = useRef(null);
+  const entityRefs = useRef([]);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Handle mouse movement for enhanced 3D card effect
   const handleMouseMove = (e, cardEl) => {
@@ -39,7 +42,7 @@ const Matters = () => {
     const y = e.clientY - rect.top;
     
     const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const centerY = rect.height / 2;  
     
     const rotateX = (y - centerY) / 15;
     const rotateY = (centerX - x) / 15;
@@ -47,8 +50,8 @@ const Matters = () => {
     cardEl.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     
     // Enhanced glowy shadow effect
-    const glowColor = 'rgba(79, 70, 229, 0.3)'; // Indigo glow color
-    const mainShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.1)';
+    const glowColor = darkMode ? 'rgba(99, 102, 241, 0.2)' : 'rgba(79, 70, 229, 0.3)';
+    const mainShadow = darkMode ? '0 10px 30px -10px rgba(0, 0, 0, 0.2)' : '0 10px 30px -10px rgba(0, 0, 0, 0.1)';
     const glowShadow = `${(x - centerX) / 25}px ${(y - centerY) / 25}px 30px -5px ${glowColor}`;
     
     cardEl.style.boxShadow = `${mainShadow}, ${glowShadow}`;
@@ -57,25 +60,27 @@ const Matters = () => {
   const handleMouseLeave = (cardEl) => {
     if (!cardEl) return;
     cardEl.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-    cardEl.style.boxShadow = '0 10px 30px -15px rgba(0, 0, 0, 0.1)';
+    cardEl.style.boxShadow = darkMode ? '0 10px 30px -15px rgba(0, 0, 0, 0.2)' : '0 10px 30px -15px rgba(0, 0, 0, 0.1)';
     cardEl.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
   };
+
+  // Check if the device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   useEffect(() => {
     if (inView) {
       setIsVisible(true);
     }
   }, [inView]);
-
-  // Handle entity hover/click to show details
-  const handleEntityInteraction = (index) => {
-    setHoveredEntity(index);
-    
-    // On mobile, also set as active for persistent display
-    if (window.innerWidth < 768) {
-      setActiveEntity(prevActive => prevActive === index ? null : index);
-    }
-  };
 
   // Update connections when ecosystem is visible
   useEffect(() => {
@@ -86,7 +91,7 @@ const Matters = () => {
     // Add resize listener for responsive connections
     window.addEventListener('resize', updateConnections);
     return () => window.removeEventListener('resize', updateConnections);
-  }, [isVisible, hoveredEntity, activeEntity]);
+  }, [isVisible, activeEntity, hoveredEntity]);
 
   // Function to update SVG connections based on current node positions
   const updateConnections = () => {
@@ -123,15 +128,30 @@ const Matters = () => {
       line.setAttribute('x2', endX);
       line.setAttribute('y2', endY);
       
-      // Enhanced styling for hovered entity
-      const isHovered = hoveredEntity === index || activeEntity === index;
-      line.setAttribute('stroke', isHovered ? "url(#lineGradient)" : "rgba(99, 102, 241, 0.3)");
-      line.setAttribute('stroke-width', isHovered ? "3" : "2");
+      // Enhanced styling for hovered/active entity
+      const isActive = activeEntity === index || hoveredEntity === index;
+      line.setAttribute('stroke', isActive ? "url(#lineGradient)" : darkMode ? "rgba(99, 102, 241, 0.3)" : "rgba(79, 70, 229, 0.3)");
+      line.setAttribute('stroke-width', isActive ? "3" : "2");
       line.setAttribute('stroke-dasharray', "6 3");
-      line.setAttribute('class', isHovered ? "animate-dash-fast" : "animate-dash");
+      line.setAttribute('class', isActive ? "animate-dash-fast" : "animate-dash");
       
       svgRef.current.appendChild(line);
     });
+  };
+
+  const handleEntityHover = (index) => {
+    if (!isMobile) {
+      setHoveredEntity(index);
+    }
+  };
+
+  const handleEntityClick = (index) => {
+    if (isMobile) {
+      setActiveEntity(activeEntity === index ? null : index);
+    } else {
+      // On desktop, clicking also sets the active entity
+      setActiveEntity(activeEntity === index ? null : index);
+    }
   };
 
   const translations = {
@@ -150,24 +170,32 @@ const Matters = () => {
           name: "Students", 
           color: "bg-purple-600", 
           iconColor: "text-purple-600",
+          textColor: "text-purple-700",
+          lightBg: "bg-purple-50",
           benefits: ["Faster internship matching", "Direct employer connections", "Skill development tracking"]
         },
         { 
           name: "Teachers", 
           color: "bg-blue-600",
           iconColor: "text-blue-600",
+          textColor: "text-blue-700",
+          lightBg: "bg-blue-50",
           benefits: ["Reduced administrative work", "Real-time student progress", "Industry-aligned teaching"]
         },
         { 
           name: "Schools", 
           color: "bg-green-600",
           iconColor: "text-green-600",
+          textColor: "text-green-700",
+          lightBg: "bg-green-50",
           benefits: ["Employment outcome metrics", "Industry partnership management", "Curriculum effectiveness data"]
         },
         { 
           name: "Employers", 
           color: "bg-yellow-500",
           iconColor: "text-yellow-500",
+          textColor: "text-yellow-600",
+          lightBg: "bg-yellow-50",
           benefits: ["Talent pipeline development", "Simpler internship management", "Skills-based recruitment"]
         },
       ],
@@ -204,7 +232,6 @@ const Matters = () => {
           icon: <Cpu />
         }
       ],
-      
     },
     sv: {
       title: "Vårt tillvägagångssätt",
@@ -221,24 +248,32 @@ const Matters = () => {
           name: "Studenter", 
           color: "bg-purple-600",
           iconColor: "text-purple-600",
+          textColor: "text-purple-700",
+          lightBg: "bg-purple-50",
           benefits: ["Snabbare praktikplacering", "Direkta arbetsgivarkontakter", "Kompetensutveckling"]
         },
         { 
           name: "Lärare", 
           color: "bg-blue-600",
           iconColor: "text-blue-600",
+          textColor: "text-blue-700",
+          lightBg: "bg-blue-50",
           benefits: ["Minskat administrativt arbete", "Realtidsuppföljning", "Branschanpassad undervisning"]
         },
         { 
           name: "Skolor", 
           color: "bg-green-600",
           iconColor: "text-green-600",
+          textColor: "text-green-700",
+          lightBg: "bg-green-50",
           benefits: ["Anställningsstatistik", "Hantering av branschpartnerskap", "Data om läroplanens effektivitet"]
         },
         { 
           name: "Arbetsgivare", 
           color: "bg-yellow-500",
           iconColor: "text-yellow-500",
+          textColor: "text-yellow-600",
+          lightBg: "bg-yellow-50",
           benefits: ["Talangutveckling", "Enklare praktikhantering", "Kompetensbaserad rekrytering"]
         },
       ],
@@ -280,7 +315,7 @@ const Matters = () => {
   };
 
   return (
-  <section 
+    <section 
       ref={ref} 
       className={`relative px-4 sm:px-6 py-16 md:py-32 ${
         darkMode ? 'bg-gray-900' : 'bg-white'
@@ -292,8 +327,8 @@ const Matters = () => {
           <div className="mb-4">
             <span className={`inline-block px-4 py-1.5 sm:px-5 sm:py-2 ${
               darkMode 
-                ? 'bg-gradient-to-r from-blue-900/30 to-blue-800/30 text-blue-300' 
-                : 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700'
+                ? 'bg-gradient-to-r from-blue-900/30 to-indigo-800/30 text-blue-300' 
+                : 'bg-gradient-to-r from-blue-50 to-indigo-100 text-blue-700'
             } rounded-full text-sm font-medium shadow-sm transition-transform hover:scale-105 hover:shadow-md`}>
               {translations[language].title}
             </span>
@@ -311,7 +346,7 @@ const Matters = () => {
             {translations[language].description}
           </p>
           
-          {/* Tab selection with animated indicator - updated for dark mode */}
+          {/* Tab selection with animated indicator */}
           <div className={`relative p-1 ${
             darkMode ? 'bg-gray-800' : 'bg-gray-100'
           } rounded-full mb-12 md:mb-16 shadow-inner`}>
@@ -358,7 +393,7 @@ const Matters = () => {
           </div>
         </div>
 
-        {/* Why This Matters Tab - updated for dark mode */}
+        {/* Why This Matters Tab */}
         <div className={`transition-all duration-700 ${activeTab === 'why' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-32 absolute pointer-events-none'}`}>
           {/* Modern Interactive Ecosystem Visualization */}
           <div 
@@ -386,7 +421,7 @@ const Matters = () => {
             
             {/* Orbital Circle Container */}
             <div className="absolute inset-0 flex items-center justify-center">
-              {/* Cosmic orbital rings - updated for dark mode */}
+              {/* Cosmic orbital rings */}
               <div className="absolute w-full h-full flex items-center justify-center">
                 <div className={`absolute w-3/4 h-3/4 rounded-full border ${
                   darkMode ? 'border-blue-900/50' : 'border-blue-100'
@@ -458,12 +493,13 @@ const Matters = () => {
                       '--entity-delay': `${index * 150}ms`,
                     };
                     
-                    const isActive = hoveredEntity === index || activeEntity === index;
+                    const isActive = activeEntity === index || hoveredEntity === index;
                     
                     return (
                       <div
                         id={`entity-${index}`}
                         key={entity.name}
+                        ref={el => entityRefs.current[index] = el}
                         className={`entity-node absolute transform transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
                         style={{
                           ...style,
@@ -473,9 +509,9 @@ const Matters = () => {
                           transform: `translate(-50%, -50%) ${isActive ? 'scale(1.1)' : 'scale(1)'}`,
                           zIndex: isActive ? 30 : 20
                         }}
-                        onMouseEnter={() => handleEntityInteraction(index)}
+                        onClick={() => handleEntityClick(index)}
+                        onMouseEnter={() => handleEntityHover(index)}
                         onMouseLeave={() => setHoveredEntity(null)}
-                        onClick={() => handleEntityInteraction(index)}
                       >
                         {/* Entity bubble with modern glass effect */}
                         <div 
@@ -487,98 +523,35 @@ const Matters = () => {
                           }}
                         >
                           <div className="flex flex-col items-center">
-                            <span className="text-xs sm:text-sm md:text-base text-center px-1">{entity.name}</span>
-                            {isActive && (
-                              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mt-1 text-white opacity-80" />
-                            )}
+                            <span className="text-xs sm:text-sm md:text-base text-center px-1">
+                              {entity.name}
+                            </span>
+                            {/* Inner glow effect on hover */}
+                            <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                           </div>
-                          
-                          {/* Inner glow effect on hover */}
-                          <div 
-                            className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-                          ></div>
                         </div>
-                        
-                        {/* Benefit card with glass morphism effect - Mobile optimized */}
-                        {isActive && (
+
+                        {/* Tooltip that appears on hover (desktop only) */}
+                        {!isMobile && isActive && (
                           <div 
-                            className={`absolute z-40 w-56 sm:w-64 benefit-card transform transition-all duration-500 scale-in-center ${
-                              window.innerWidth < 768 ? 
-                                'fixed inset-0 m-auto h-max max-h-[80vh] max-w-[90vw] p-4' : 
-                                'absolute w-64 top-[120%]'
-                            }`}
-                            style={{
-                              filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04))',
-                              ...(window.innerWidth >= 768 && {
-                                left: index === 0 || index === 3 ? '-100%' : '50%',
-                                transform: index === 0 || index === 3 ? 'translateX(0)' : 'translateX(-50%)'
-                              })
-                            }}
+                            className={`absolute entity-tooltip transform origin-center transition-all duration-300 z-40 ${
+                              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                            } border shadow-xl rounded-xl overflow-hidden min-w-52 p-4 ${getTooltipPosition(index)}`}
                           >
-                            {/* Pointer triangle - only on desktop */}
-                            {window.innerWidth >= 768 && (
-                              <div 
-                                className="absolute top-0 left-0 w-full flex justify-center" 
-                                style={{ transform: 'translateY(-100%)' }}
-                              >
-                                <div 
-                                  className={`triangle-up ${entity.color} opacity-90`}
-                                  style={{ 
-                                    width: '0', 
-                                    height: '0',
-                                    borderLeft: '10px solid transparent',
-                                    borderRight: '10px solid transparent',
-                                    borderBottom: '15px solid'
-                                  }}
-                                ></div>
-                              </div>
-                            )}
-                            
-                            {/* Card content with glass effect - updated for dark mode */}
-                            <div 
-                              className="rounded-xl overflow-hidden backdrop-blur-md"
-                              style={{
-                                backgroundColor: darkMode ? 'rgba(17, 24, 39, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-                                border: darkMode ? '1px solid rgba(55, 65, 81, 0.5)' : '1px solid rgba(209, 213, 219, 0.5)',
-                                boxShadow: darkMode 
-                                  ? '0 10px 25px rgba(99, 102, 241, 0.1)' 
-                                  : '0 10px 25px rgba(99, 102, 241, 0.2)'
-                              }}
-                            >
-                              <div className={`h-2 ${entity.color}`}></div>
-                              <div className="p-4 sm:p-5">
-                                <div className="flex items-center mb-2 sm:mb-3">
-                                  <span className={`inline-block w-3 h-3 rounded-full ${entity.color} mr-2`}></span>
-                                  <h4 className={`font-bold text-base sm:text-lg ${
-                                    darkMode ? 'text-white' : 'text-gray-900'
-                                  }`}>{entity.name}</h4>
-                                </div>
-                                <ul className="space-y-1 sm:space-y-2">
-                                  {entity.benefits.map((benefit, i) => (
-                                    <li key={i} className="flex items-start benefit-item" style={{ '--benefit-delay': `${i * 150}ms` }}>
-                                      <CheckCircle className={`${entity.iconColor} h-4 w-4 sm:h-5 sm:w-5 mr-2 mt-0.5 flex-shrink-0`} />
-                                      <span className={`text-sm sm:text-base ${
-                                        darkMode ? 'text-gray-300' : 'text-gray-700'
-                                      }`}>{benefit}</span>
-                                    </li>
-                                  ))}
-                                </ul>
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center">
+                                <span className={`inline-block w-3 h-3 mr-2 rounded-full ${entity.color}`}></span>
+                                <h4 className={`font-bold ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{entity.name}</h4>
                               </div>
                             </div>
-
-                            {/* Close button for mobile */}
-                            {window.innerWidth < 768 && (
-                              <button 
-                                onClick={() => setActiveEntity(null)}
-                                className={`absolute top-2 right-2 ${
-                                  darkMode ? 'bg-gray-700' : 'bg-white'
-                                } rounded-full p-1 shadow-md z-50`}
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                              </button>
-                            )}
+                            <ul className="space-y-2">
+                              {entity.benefits.map((benefit, i) => (
+                                <li key={i} className="flex items-start">
+                                  <CheckCircle className={`${entity.iconColor} h-4 w-4 mr-2 mt-0.5 flex-shrink-0`} />
+                                  <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{benefit}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         )}
                       </div>
@@ -590,7 +563,7 @@ const Matters = () => {
           </div>
         </div>
 
-        {/* How We Deliver Tab - updated for dark mode */}
+        {/* How We Deliver Tab */}
         <div className={`transition-all duration-700 ${activeTab === 'how' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-32 absolute pointer-events-none'}`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 md:mb-16">
             {translations[language].features.map((feature, index) => {
@@ -603,70 +576,172 @@ const Matters = () => {
                     isVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-20 rotate-2'
                   } shadow-feature-card hover:shadow-feature-glow ${
                     darkMode 
-                      ? 'bg-gray-800 border-gray-700' 
-                      : 'bg-white border-gray-200'
-                  } border`}
+                      ? 'bg-gray-800/90 border-gray-700/70' 
+                      : 'bg-white border-gray-100'
+                  } border hover:border-blue-400/30`}
                   style={{ 
-                    transitionDelay: `${delay}ms`, 
-                    transform: 'perspective(1000px)',
-                    transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+                    transitionDelay: `${delay}ms`,
+                    transformOrigin: index % 2 === 0 ? 'bottom left' : 'bottom right'
                   }}
-                  onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
-                  onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
+                  onMouseMove={e => !isMobile && handleMouseMove(e, e.currentTarget)}
+                  onMouseLeave={e => !isMobile && handleMouseLeave(e.currentTarget)}
                 >
-                  <div className="h-2 w-full bg-gradient-to-r from-blue-600 to-purple-600"></div>
-                  <div className="p-5 sm:p-6">
-                    <div className={`p-3 sm:p-4 mb-3 sm:mb-4 rounded-xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center ${
+                  <div className="p-5 sm:p-6 h-full flex flex-col">
+                    <div className={`w-12 h-12 rounded-lg ${
                       darkMode 
-                        ? 'bg-gradient-to-br from-blue-900/20 to-indigo-900/20 group-hover:from-blue-900/30 group-hover:to-indigo-900/30' 
-                        : 'bg-gradient-to-br from-blue-50 to-indigo-50 group-hover:from-blue-100 group-hover:to-indigo-100'
-                    } transition-colors duration-300 shadow-inner`}>
-                      {React.cloneElement(feature.icon, { 
-                        size: 28, 
-                        className: darkMode ? 'text-blue-400' : 'text-blue-600' 
+                        ? 'bg-blue-900/30 text-blue-400' 
+                        : 'bg-blue-50 text-blue-600'
+                    } flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                      {React.cloneElement(feature.icon, {
+                        className: "w-6 h-6"
                       })}
                     </div>
-                    <h3 className={`text-lg sm:text-xl font-bold mb-1 sm:mb-2 ${
-                      darkMode ? 'text-blue-300' : 'text-blue-900'
-                    }`}>{feature.title}</h3>
+                    
+                    <h3 className={`text-lg sm:text-xl font-bold mb-2 ${
+                      darkMode ? 'text-gray-200' : 'text-gray-900'
+                    }`}>
+                      {feature.title}
+                    </h3>
+                    
                     <p className={`text-sm sm:text-base ${
-                      darkMode ? 'text-gray-300' : 'text-gray-700'
-                    }`}>{feature.description}</p>
-                  </div>
-                  
-                  {/* Enhanced decorative corner accent */}
-                  <div className="absolute -bottom-2 -right-2 w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-                    <div className="absolute -bottom-1 -right-1 w-16 h-16 bg-gradient-to-tl from-blue-500 to-purple-500 transform rotate-45"></div>
+                      darkMode ? 'text-gray-400' : 'text-gray-600'
+                    }`}>
+                      {feature.description}
+                    </p>
+                    
+                    <div className="mt-auto pt-4">
+                      <span className={`inline-flex items-center text-sm font-medium ${
+                        darkMode ? 'text-blue-400' : 'text-blue-600'
+                      } group-hover:underline`}>
+                        <span>Learn more</span>
+                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
+          
+          {/* CTA button */}
+          <div className="flex justify-center">
+            <button 
+              className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+                darkMode 
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-glow-blue'
+                  : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-glow-blue'
+              }`}
+            >
+              <div className="flex items-center space-x-2">
+                <span>{language === 'sv' ? "Se hur det fungerar" : "See how it works"}</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
       
-      {/* Background decorations - updated for dark mode */}
-      <div className={`absolute bottom-0 left-0 w-80 h-80 rounded-full filter blur-3xl opacity-30 transform -translate-x-1/3 translate-y-1/4 ${
-        darkMode ? 'bg-purple-900/50' : 'bg-gradient-to-t from-purple-100 to-transparent'
-      }`}></div>
+      {/* Mobile entity details panel (for tablets/phones) */}
+      {isMobile && activeEntity !== null && (
+        <div 
+          className={`fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${
+            activeEntity !== null ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={() => setActiveEntity(null)}
+        >
+          <div 
+            className={`${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+            } border rounded-xl w-full max-w-xs sm:max-w-sm overflow-hidden`}
+            onClick={e => e.stopPropagation()}
+          >
+            <div className={`p-4 ${translations[language].entities[activeEntity].lightBg} flex items-center justify-between`}>
+              <div className="flex items-center">
+                <span className={`inline-block w-3 h-3 mr-2 rounded-full ${translations[language].entities[activeEntity].color}`}></span>
+                <h3 className={`font-bold ${translations[language].entities[activeEntity].textColor}`}>
+                  {translations[language].entities[activeEntity].name}
+                </h3>
+              </div>
+              <button 
+                className="text-gray-500 hover:text-gray-700"
+                onClick={() => setActiveEntity(null)}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <ul className="space-y-3">
+                {translations[language].entities[activeEntity].benefits.map((benefit, i) => (
+                  <li key={i} className="flex items-start">
+                    <CheckCircle className={`${translations[language].entities[activeEntity].iconColor} h-5 w-5 mr-2 mt-0.5 flex-shrink-0`} />
+                    <span className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
       
-      {/* Keep the existing style tag */}
-      <style jsx>{`
-        /* ... (keep all your existing animations and styles) */
+      {/* Decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Gradient background */}
+        <div 
+          className={`absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full blur-3xl opacity-10 ${
+            darkMode ? 'bg-blue-500' : 'bg-blue-600'
+          }`}
+        ></div>
+        <div 
+          className={`absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full blur-3xl opacity-10 ${
+            darkMode ? 'bg-purple-500' : 'bg-purple-600'
+          }`}
+        ></div>
         
-        .shadow-feature-card {
-          box-shadow: ${darkMode 
-            ? '0 10px 30px -15px rgba(0, 0, 0, 0.3)' 
-            : '0 10px 30px -15px rgba(0, 0, 0, 0.1)'};
-        }
-        .shadow-feature-glow {
-          box-shadow: ${darkMode 
-            ? '0 20px 30px -15px rgba(79, 70, 229, 0.3), 0 10px 20px -10px rgba(79, 70, 229, 0.2)' 
-            : '0 20px 30px -15px rgba(79, 70, 229, 0.2), 0 10px 20px -10px rgba(79, 70, 229, 0.1)'};
-        }
-      `}</style>
+        {/* Floating sparkles */}
+        {isVisible && Array.from({ length: 20 }).map((_, i) => {
+          const randomSize = Math.random() * 4 + 2;
+          const randomX = Math.random() * 100;
+          const randomY = Math.random() * 100;
+          const randomDelay = Math.random() * 5;
+          const randomDuration = Math.random() * 15 + 10;
+          
+          return (
+            <div 
+              key={i}
+              className={`absolute rounded-full ${
+                darkMode ? 'bg-blue-400' : 'bg-blue-300'
+              } opacity-40 animate-float pointer-events-none`}
+              style={{
+                width: `${randomSize}px`,
+                height: `${randomSize}px`,
+                left: `${randomX}%`,
+                top: `${randomY}%`,
+                animationDelay: `${randomDelay}s`,
+                animationDuration: `${randomDuration}s`
+              }}
+            ></div>
+          );
+        })}
+      </div>
     </section>
   );
 };
+
+// Helper function to position tooltips based on the entity position
+function getTooltipPosition(index) {
+  // Adjust tooltip position based on which quadrant the entity is in
+  switch (index) {
+    case 0: // top
+      return 'left-1/2 -translate-x-1/2 bottom-full mb-4';
+    case 1: // right
+      return 'top-1/2 -translate-y-1/2 left-full ml-4';
+    case 2: // bottom
+      return 'left-1/2 -translate-x-1/2 top-full mt-4';
+    case 3: // left
+      return 'top-1/2 -translate-y-1/2 right-full mr-4';
+    default:
+      return 'left-1/2 -translate-x-1/2 bottom-full mb-4';
+  }
+}
 
 export default Matters;

@@ -4,7 +4,7 @@ import { FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
 import { IoIosArrowDown } from 'react-icons/io';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { MdOutlineSpaceDashboard } from 'react-icons/md';
-import logo from '../../assets/logoPraktikly.png';
+import logo from '../../assets/logoheader.png';
 import { useLanguage } from '../../Context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../Context/ThemeContext';
@@ -55,12 +55,14 @@ const Header = () => {
 
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      darkMode ? 'bg-black/90 text-white' : 'bg-white/90 text-[#0d5550]'
-    } ${
-      scrolled ? 'backdrop-blur-md shadow-lg' : 'backdrop-blur-sm'
-    }`}
-    style={{ fontFamily: "'Times New Roman', Times, serif" }}>
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        darkMode ? 'bg-black/90 text-white' : 'bg-white/90 text-[#0d5550]'
+      } ${
+        scrolled ? 'backdrop-blur-md shadow-lg' : 'backdrop-blur-sm'
+      }`}
+      style={{ fontFamily: '"Helvetica Neue", sans-serif' }}
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[1, 2, 3].map((i) => (
@@ -107,36 +109,28 @@ const Header = () => {
 >
   <Link to="/" className="flex items-center">
     <motion.div 
-      className={`rounded-full p-2 shadow-md flex items-center justify-center ${
-        darkMode ? 'bg-[#0b750b]' : 'bg-gradient-to-br from-[#0b750b] to-[#030104]'
-      }`}
+      className={`rounded-full p-3 shadow-lg flex items-center justify-center bg-white`}
       style={{ 
-        background: darkMode 
-          ? 'linear-gradient(135deg, #0b750b 20%, #000000 20%)' 
-          : 'linear-gradient(135deg, #0b750b 20%, #5a0dad 20%)'
+        boxShadow: darkMode 
+          ? '0 4px 12px rgba(255, 255, 255, 0.1)' 
+          : '0 4px 12px rgba(0, 0, 0, 0.1)'
       }}
       whileHover={{ 
-        scale: 1,
-        rotate: 5,
-        boxShadow: darkMode 
-          ? '0 10px 25px -5px rgba(11, 117, 11, 0.4)' 
-          : '0 10px 25px -5px rgba(90, 13, 173, 0.3)'
+        scale: 1.05,
+        
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)'
       }}
       transition={{ type: 'spring', stiffness: 400, damping: 10 }}
     >
       <img
         src={logo}
         alt="Praktikly Logo"
-        className="h-8 w-auto"
+        className="h-9 w-auto" // Increased from h-8 to h-10
       />
     </motion.div>
     <motion.span 
-      className={`ml-3 text-xl font-bold ${
-        darkMode ? 'text-white' : 'text-[#5a0dad]'
-      }`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.2 }}
+      className={`ml-3 text-xl ${darkMode ? 'text-white' : 'text-[#0d5550]'}`}
+      style={{ fontWeight: 700 }}
     >
       
     </motion.span>
@@ -144,7 +138,7 @@ const Header = () => {
 </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8" style={{ fontWeight: 500 }}>
             {/* Products Dropdown */}
             <motion.div
               className="relative"
@@ -154,7 +148,7 @@ const Header = () => {
             >
               <button className={`flex items-center space-x-1 font-medium focus:outline-none ${
                 darkMode ? 'hover:text-purple-300' : 'hover:text-[#0b7077]'
-              }`}>
+              }`} style={{ fontWeight: 500 }}>
                 <span>{translations[language].products}</span>
                 <motion.div
                   animate={{ rotate: showProducts ? 180 : 0 }}
@@ -319,13 +313,17 @@ const Header = () => {
             >
               <Link
                 to="/login"
-                className={`px-5 py-2.5 rounded-full font-medium transition-all flex items-center ${
+                className={`px-5 py-2.5 rounded-full transition-all flex items-center text-white ${
                   darkMode 
-                    ? 'bg-gradient-to-r from-purple-600 to-blue-700 hover:from-purple-700 hover:to-blue-800 text-white shadow-lg hover:shadow-purple-500/30' 
-                    : 'bg-gradient-to-r from-[#0d5550] to-[#0b7077] hover:from-[#0b7077] hover:to-[#0a5a6e] text-white shadow-lg hover:shadow-[#0b7077]/30'
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-700' 
+                    : 'bg-gradient-to-r from-[#0d5550] to-[#0b7077]'
                 }`}
+                style={{ 
+                  fontFamily: '"Helvetica Neue", sans-serif',
+                  fontWeight: 600 
+                }}
               >
-                <RiLoginCircleLine className="mr-2" size={18} />
+                <RiLoginCircleLine className="mr-2 text-white" size={18} />
                 {translations[language].login}
               </Link>
             </motion.div>
@@ -409,7 +407,9 @@ const Header = () => {
                   </motion.div>
                   <span className={`ml-3 font-bold text-lg ${
                     darkMode ? 'text-white' : 'text-[#0d5550]'
-                  }`}>PRAKTIKLY</span>
+                  }`} style={{ fontWeight: 700 }}>
+                   
+                  </span>
                 </Link>
                 <motion.button
                   onClick={() => setMobileMenuOpen(false)}
@@ -425,14 +425,15 @@ const Header = () => {
                 </motion.button>
               </div>
               
-              <div className="px-4 py-6 space-y-2">
+              <div className="px-4 py-6 space-y-2" style={{ fontWeight: 400 }}>
                 {/* Mobile Products Dropdown */}
                 <div className="relative">
                   <button 
                     onClick={() => setShowProducts(!showProducts)}
-                    className={`w-full flex justify-between items-center px-4 py-3 rounded-full text-base font-medium ${
+                    className={`w-full flex justify-between items-center px-4 py-3 rounded-full text-base ${
                       darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-50'
                     }`}
+                    style={{ fontWeight: 500 }}
                   >
                     <span>{translations[language].products}</span>
                     <motion.div
@@ -527,7 +528,7 @@ const Header = () => {
                 <div className="mb-6">
                   <p className={`px-2 text-sm mb-3 ${
                     darkMode ? 'text-gray-400' : 'text-gray-500'
-                  }`}>
+                  }`} style={{ fontWeight: 500 }}>
                     {language === 'en' ? 'Language' : 'Språk'}
                   </p>
                   <div className="grid grid-cols-2 gap-3">

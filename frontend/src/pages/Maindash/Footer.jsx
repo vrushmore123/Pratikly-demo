@@ -23,6 +23,7 @@ import {
   Info,
   Contact
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Logo component - replace with your actual logo import
 const Logo = ({ darkMode }) => (
@@ -47,8 +48,8 @@ const Footer = () => {
       ],
       contact: {
         demo: "Get a Demo",
-        email: "info@liahub.com",
-        phone: "+46 70 123 4567",
+        email: "info@ultranous.com",
+        phone: "+46 734783859",
         linkedin: "LinkedIn"
       },
       preferences: {
@@ -187,7 +188,8 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-2 border-b border-gray-500 pb-2 inline-block">
               {language === 'en' ? 'Contact' : 'Kontakt'}
             </h3>
-            <motion.button 
+          <Link to="/form"> <motion.button 
+              
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               className={`w-full px-6 py-3 rounded-lg font-medium transition-colors ${
@@ -195,7 +197,9 @@ const Footer = () => {
               } text-white shadow-lg text-lg flex items-center justify-center gap-2`}
             >
               {content.contact.demo}
-            </motion.button>
+            </motion.button></Link>
+
+            
             
             <div className="space-y-4 mt-4">
               <motion.a 
@@ -221,7 +225,7 @@ const Footer = () => {
               </motion.a>
               
               <motion.a 
-                href="#"
+                href="https://www.linkedin.com/company/ultranous/"
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 3 }}
               >
